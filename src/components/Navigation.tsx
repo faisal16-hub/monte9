@@ -48,7 +48,7 @@ export function Navigation() {
             ))}
             
             <Link
-              to="/contact"
+              to="/book-visit"
               className="bg-[#416D50] text-white px-6 py-3 rounded-xl hover:bg-[#365840] transition-colors"
               style={{ fontSize: '16px' }}
             >
@@ -85,7 +85,7 @@ export function Navigation() {
                 </Link>
               ))}
               <Link
-                to="/contact"
+                to="/book-visit"
                 onClick={() => setIsMenuOpen(false)}
                 className="bg-[#416D50] text-white px-4 py-3 rounded-xl text-center hover:bg-[#365840] transition-colors"
               >

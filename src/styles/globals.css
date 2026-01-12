@@ -210,3 +210,45 @@ html {
   font-size: var(--font-size);
   scroll-behavior: smooth;
 }
+
+/* Enhanced Focus States for Accessibility */
+@layer base {
+  *:focus-visible {
+    outline: 2px solid #B08C44;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid #B08C44;
+    outline-offset: 2px;
+  }
+
+  /* Screen reader only class */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: initial;
+    margin: initial;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+}

@@ -1,7 +1,7 @@
 
-  # monte test 1
+  # Monte Developments
 
-  This is a code bundle for monte test 1. The original project is available at https://www.figma.com/design/mSd28TbpB8ivxRcr8FzuEh/monte-test-1.
+  This is a code bundle for Monte Developments. The original project is available at https://www.figma.com/design/NlZXkiprzmFrCtD4j0exJ3/Monte-Developments.
 
   ## Running the code
 

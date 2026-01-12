@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Bed, Bath, Maximize, SlidersHorizontal, Map, Grid, ChevronDown, ChevronUp } from 'lucide-react';
+import { Bed, Bath, Maximize, SlidersHorizontal, Map, Grid, ChevronDown, ChevronUp, X } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Slider } from '../components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
@@ -8,86 +8,45 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 const allProjects = [
   {
     id: 1,
-    name: 'Ras Rami Al-Arabia, New Cairo',
-    price: 12000,
-    maxPrice: 15000,
-    units: 28,
+    name: 'J83, bayet al watan, New cairo',
+    price: 22000,
+    maxPrice: 24500,
+    units: 6,
     beds: 3,
     baths: 2,
-    area: 180,
+    area: '176-230',
     floors: 5,
-    location: 'New Cairo',
-    image: 'https://images.unsplash.com/photo-1651093791352-2ae1c9e5e428?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZXNpZGVudGlhbCUyMGJ1aWxkaW5nJTIwYXJjaGl0ZWN0dXJlfGVufDF8fHx8MTc2NTU5ODYyN3ww&ixlib=rb-4.1.0&q=80&w=1080',
+    location: 'Bayet al watan, New Cairo',
+    image: 'https://www.dropbox.com/scl/fi/w3r6wo5qalsardwe7s8rl/WhatsApp-Image-2026-01-12-at-12.50.24-AM.jpeg?rlkey=01g3z8l0wnoyk7mcvsvno2wnr&st=dxohq7pq&raw=1',
     featured: true,
   },
   {
     id: 2,
-    name: 'Palm Hills, New Cairo',
-    price: 10000,
-    maxPrice: 13000,
-    units: 34,
+    name: 'K108, bayet al watan, New cairo',
+    price: 25000,
+    maxPrice: 27500,
+    units: 12,
     beds: 2,
     baths: 2,
-    area: 150,
+    area: '146-231',
     floors: 4,
     location: 'New Cairo',
-    image: 'https://images.unsplash.com/photo-1619647787040-5583f41eb9b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBhcGFydG1lbnQlMjBidWlsZGluZ3xlbnwxfHx8fDE3NjU2MzU0MTZ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: 'https://www.dropbox.com/scl/fi/3gvyuzyai9zeg61wtkue6/Logo-Gold.png?rlkey=nsu2yinbsy62ee0md23gr9oby&st=yh7gqjgw&raw=1',
     featured: false,
+    isNew: true,
   },
   {
     id: 3,
-    name: 'Green Valley, 5th Settlement',
-    price: 15000,
-    maxPrice: 18000,
-    units: 22,
+    name: 'G85, bayet al watan, New cairo',
+    price: 20000,
+    maxPrice: 22000,
+    units: 2,
     beds: 4,
     baths: 3,
-    area: 220,
+    area: '177-242',
     floors: 6,
     location: '5th Settlement',
-    image: 'https://images.unsplash.com/photo-1630404991412-9504d094e8ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxncmVlbiUyMGJ1aWxkaW5nJTIwc3VzdGFpbmFibGV8ZW58MXx8fHwxNzY1NjM1NDE2fDA&ixlib=rb-4.1.0&q=80&w=1080',
-    featured: true,
-  },
-  {
-    id: 4,
-    name: 'Sunset Residences, Sheikh Zayed',
-    price: 13000,
-    maxPrice: 16000,
-    units: 18,
-    beds: 3,
-    baths: 2,
-    area: 190,
-    floors: 5,
-    location: 'Sheikh Zayed',
-    image: 'https://images.unsplash.com/photo-1708085342347-6d0dd245f90e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBlY28lMjBob3VzZSUyMGV4dGVyaW9yfGVufDF8fHx8MTc2NTYzNTQxNXww&ixlib=rb-4.1.0&q=80&w=1080',
-    featured: false,
-  },
-  {
-    id: 5,
-    name: 'Oakwood Heights, Maadi',
-    price: 9000,
-    maxPrice: 12000,
-    units: 42,
-    beds: 2,
-    baths: 1,
-    area: 120,
-    floors: 3,
-    location: 'Maadi',
-    image: 'https://images.unsplash.com/photo-1651093791352-2ae1c9e5e428?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZXNpZGVudGlhbCUyMGJ1aWxkaW5nJTIwYXJjaGl0ZWN0dXJlfGVufDF8fHx8MTc2NTU5ODYyN3ww&ixlib=rb-4.1.0&q=80&w=1080',
-    featured: false,
-  },
-  {
-    id: 6,
-    name: 'Marina Views, North Coast',
-    price: 20000,
-    maxPrice: 25000,
-    units: 15,
-    beds: 4,
-    baths: 3,
-    area: 250,
-    floors: 7,
-    location: 'North Coast',
-    image: 'https://images.unsplash.com/photo-1619647787040-5583f41eb9b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBhcGFydG1lbnQlMjBidWlsZGluZ3xlbnwxfHx8fDE3NjU2MzU0MTZ8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: 'https://www.dropbox.com/scl/fi/gwx0euxy3qbjpdo63g50w/WhatsApp-Image-2026-01-12-at-4.57.27-PM.jpeg?rlkey=yg573w36fr4ubv23slx8k546y&st=bf1v5uvi&raw=1',
     featured: true,
   },
 ];
@@ -99,16 +58,38 @@ export function ProjectsPage() {
   const [selectedArea, setSelectedArea] = useState<string>('all');
   const [selectedLocation, setSelectedLocation] = useState<string>('all');
   const [sortBy, setSortBy] = useState('recent');
-  const [filtersExpanded, setFiltersExpanded] = useState(true);
+  const [filtersExpanded, setFiltersExpanded] = useState(false);
+
+  // Helper function to parse area range
+  const parseAreaRange = (areaStr: string) => {
+    const match = areaStr.match(/(\d+)-(\d+)/);
+    if (match) {
+      return { min: parseInt(match[1]), max: parseInt(match[2]) };
+    }
+    return { min: 0, max: 0 };
+  };
 
   // Filter projects
   let filteredProjects = allProjects.filter((project) => {
     const matchesPrice = project.price >= priceRange[0] && project.price <= priceRange[1];
     const matchesFloors = selectedFloors === 'all' || project.floors === parseInt(selectedFloors);
-    const matchesArea = selectedArea === 'all' || 
-      (selectedArea === '100-150' && project.area >= 100 && project.area <= 150) ||
-      (selectedArea === '150-200' && project.area > 150 && project.area <= 200) ||
-      (selectedArea === '200+' && project.area > 200);
+    
+    // Fixed area filter logic
+    let matchesArea = true;
+    if (selectedArea !== 'all') {
+      const projectAreaRange = parseAreaRange(project.area);
+      const projectMinArea = projectAreaRange.min;
+      const projectMaxArea = projectAreaRange.max;
+      
+      if (selectedArea === '100-150') {
+        matchesArea = projectMinArea >= 100 && projectMaxArea <= 150;
+      } else if (selectedArea === '150-200') {
+        matchesArea = projectMinArea >= 150 && projectMaxArea <= 200;
+      } else if (selectedArea === '200+') {
+        matchesArea = projectMinArea >= 200;
+      }
+    }
+    
     const matchesLocation = selectedLocation === 'all' || project.location === selectedLocation;
     
     return matchesPrice && matchesFloors && matchesArea && matchesLocation;
@@ -122,20 +103,59 @@ export function ProjectsPage() {
     return 0; // recent (default order)
   });
 
+  // Get active filters
+  const getActiveFilters = () => {
+    const filters = [];
+    if (priceRange[0] !== 5000 || priceRange[1] !== 30000) {
+      filters.push({
+        label: `Price: ${priceRange[0].toLocaleString()} - ${priceRange[1].toLocaleString()} EGP`,
+        onRemove: () => setPriceRange([5000, 30000]),
+      });
+    }
+    if (selectedFloors !== 'all') {
+      filters.push({
+        label: `${selectedFloors} floors`,
+        onRemove: () => setSelectedFloors('all'),
+      });
+    }
+    if (selectedArea !== 'all') {
+      const areaLabel = selectedArea === '200+' ? '200+ m²' : `${selectedArea} m²`;
+      filters.push({
+        label: areaLabel,
+        onRemove: () => setSelectedArea('all'),
+      });
+    }
+    if (selectedLocation !== 'all') {
+      filters.push({
+        label: selectedLocation,
+        onRemove: () => setSelectedLocation('all'),
+      });
+    }
+    return filters;
+  };
+
+  const activeFilters = getActiveFilters();
+  const clearAllFilters = () => {
+    setPriceRange([5000, 30000]);
+    setSelectedFloors('all');
+    setSelectedArea('all');
+    setSelectedLocation('all');
+  };
+
   return (
-    <div className="pt-20 min-h-screen bg-gray-50">
+    <div className="pt-16 sm:pt-20 min-h-screen bg-gray-50">
       {/* Header */}
-      <section className="bg-[#416D50] text-white py-16">
+      <section className="bg-[#416D50] text-white py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-white mb-4">Our Projects</h1>
-          <p style={{ fontSize: '19px' }}>
+          <h1 className="text-white mb-3 sm:mb-4 text-3xl sm:text-4xl">Our Projects</h1>
+          <p className="text-base sm:text-lg lg:text-[19px]">
             Discover our portfolio of eco-friendly residential developments
           </p>
         </div>
       </section>
 
       {/* Filters Bar */}
-      <div className="sticky top-20 z-40 bg-white shadow-md">
+      <div className="sticky top-16 sm:top-20 z-40 bg-white shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           {/* Collapsible Filters */}
           {filtersExpanded && (
@@ -146,14 +166,14 @@ export function ProjectsPage() {
               transition={{ duration: 0.3 }}
               className="overflow-hidden"
             >
-              <div className="flex flex-col lg:flex-row gap-3 pb-3">
+              <div className="flex flex-col gap-3 pb-3">
                 {/* Price Range */}
-                <div className="flex-1">
-                  <label className="block mb-1.5" style={{ fontSize: '11px', color: '#666' }}>
+                <div className="w-full">
+                  <label className="block mb-1.5 text-xs sm:text-[11px]" style={{ color: '#666' }}>
                     Price Range (EGP/m²)
                   </label>
-                  <div className="flex items-center gap-3">
-                    <span style={{ fontSize: '13px' }}>{priceRange[0].toLocaleString()}</span>
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <span className="text-xs sm:text-[13px] whitespace-nowrap">{priceRange[0].toLocaleString()}</span>
                     <Slider
                       value={priceRange}
                       onValueChange={setPriceRange}
@@ -162,92 +182,94 @@ export function ProjectsPage() {
                       step={1000}
                       className="flex-1"
                     />
-                    <span style={{ fontSize: '13px' }}>{priceRange[1].toLocaleString()}</span>
+                    <span className="text-xs sm:text-[13px] whitespace-nowrap">{priceRange[1].toLocaleString()}</span>
                   </div>
                 </div>
 
-                {/* Floors */}
-                <div className="w-full lg:w-40">
-                  <label className="block mb-1.5" style={{ fontSize: '11px', color: '#666' }}>
-                    Floors
-                  </label>
-                  <Select value={selectedFloors} onValueChange={setSelectedFloors}>
-                    <SelectTrigger className="h-9 text-sm">
-                      <SelectValue placeholder="All floors" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All floors</SelectItem>
-                      <SelectItem value="3">3 floors</SelectItem>
-                      <SelectItem value="4">4 floors</SelectItem>
-                      <SelectItem value="5">5 floors</SelectItem>
-                      <SelectItem value="6">6 floors</SelectItem>
-                      <SelectItem value="7">7+ floors</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {/* Floors */}
+                  <div className="w-full">
+                    <label className="block mb-1.5 text-xs sm:text-[11px]" style={{ color: '#666' }}>
+                      Floors
+                    </label>
+                    <Select value={selectedFloors} onValueChange={setSelectedFloors}>
+                      <SelectTrigger className="h-9 text-xs sm:text-sm w-full">
+                        <SelectValue placeholder="All floors" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All floors</SelectItem>
+                        <SelectItem value="3">3 floors</SelectItem>
+                        <SelectItem value="4">4 floors</SelectItem>
+                        <SelectItem value="5">5 floors</SelectItem>
+                        <SelectItem value="6">6 floors</SelectItem>
+                        <SelectItem value="7">7+ floors</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-                {/* Flat Size */}
-                <div className="w-full lg:w-40">
-                  <label className="block mb-1.5" style={{ fontSize: '11px', color: '#666' }}>
-                    Flat Size
-                  </label>
-                  <Select value={selectedArea} onValueChange={setSelectedArea}>
-                    <SelectTrigger className="h-9 text-sm">
-                      <SelectValue placeholder="All sizes" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All sizes</SelectItem>
-                      <SelectItem value="100-150">100-150 m²</SelectItem>
-                      <SelectItem value="150-200">150-200 m²</SelectItem>
-                      <SelectItem value="200+">200+ m²</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                  {/* Flat Size */}
+                  <div className="w-full">
+                    <label className="block mb-1.5 text-xs sm:text-[11px]" style={{ color: '#666' }}>
+                      Flat Size
+                    </label>
+                    <Select value={selectedArea} onValueChange={setSelectedArea}>
+                      <SelectTrigger className="h-9 text-xs sm:text-sm w-full">
+                        <SelectValue placeholder="All sizes" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All sizes</SelectItem>
+                        <SelectItem value="100-150">100-150 m²</SelectItem>
+                        <SelectItem value="150-200">150-200 m²</SelectItem>
+                        <SelectItem value="200+">200+ m²</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-                {/* Location */}
-                <div className="w-full lg:w-40">
-                  <label className="block mb-1.5" style={{ fontSize: '11px', color: '#666' }}>
-                    Location
-                  </label>
-                  <Select value={selectedLocation} onValueChange={setSelectedLocation}>
-                    <SelectTrigger className="h-9 text-sm">
-                      <SelectValue placeholder="All locations" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">All locations</SelectItem>
-                      <SelectItem value="New Cairo">New Cairo</SelectItem>
-                      <SelectItem value="5th Settlement">5th Settlement</SelectItem>
-                      <SelectItem value="Sheikh Zayed">Sheikh Zayed</SelectItem>
-                      <SelectItem value="Maadi">Maadi</SelectItem>
-                      <SelectItem value="North Coast">North Coast</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  {/* Location */}
+                  <div className="w-full sm:col-span-2 lg:col-span-1">
+                    <label className="block mb-1.5 text-xs sm:text-[11px]" style={{ color: '#666' }}>
+                      Location
+                    </label>
+                    <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+                      <SelectTrigger className="h-9 text-xs sm:text-sm w-full">
+                        <SelectValue placeholder="All locations" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All locations</SelectItem>
+                        <SelectItem value="New Cairo">New Cairo</SelectItem>
+                        <SelectItem value="5th Settlement">5th Settlement</SelectItem>
+                        <SelectItem value="Sheikh Zayed">Sheikh Zayed</SelectItem>
+                        <SelectItem value="Maadi">Maadi</SelectItem>
+                        <SelectItem value="North Coast">North Coast</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </div>
             </motion.div>
           )}
 
           {/* Sort and View Toggle - Always Visible */}
-          <div className={`flex items-center justify-between ${filtersExpanded ? 'pt-3 border-t' : ''}`}>
-            <div className="flex items-center gap-3">
+          <div className={`flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 ${filtersExpanded ? 'pt-3 border-t' : ''}`}>
+            <div className="flex items-center gap-3 flex-wrap">
               <button
                 onClick={() => setFiltersExpanded(!filtersExpanded)}
                 className="flex items-center gap-2 text-[#416D50] hover:text-[#365840] transition-colors"
               >
                 <SlidersHorizontal size={16} />
-                <span style={{ fontSize: '13px' }}>
+                <span className="text-xs sm:text-[13px]">
                   {filtersExpanded ? 'Hide Filters' : 'Show Filters'}
                 </span>
                 {filtersExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
               </button>
-              <span style={{ fontSize: '13px', color: '#666' }}>
+              <span className="text-xs sm:text-[13px]" style={{ color: '#666' }}>
                 {filteredProjects.length} properties found
               </span>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
               <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-40 h-9 text-sm">
+                <SelectTrigger className="w-full sm:w-40 h-9 text-xs sm:text-sm">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
@@ -257,25 +279,6 @@ export function ProjectsPage() {
                   <SelectItem value="popular">Most Popular</SelectItem>
                 </SelectContent>
               </Select>
-
-              <div className="flex gap-1.5">
-                <button
-                  onClick={() => setViewMode('grid')}
-                  className={`p-1.5 rounded ${
-                    viewMode === 'grid' ? 'bg-[#416D50] text-white' : 'bg-gray-200 text-gray-600'
-                  }`}
-                >
-                  <Grid size={18} />
-                </button>
-                <button
-                  onClick={() => setViewMode('map')}
-                  className={`p-1.5 rounded ${
-                    viewMode === 'map' ? 'bg-[#416D50] text-white' : 'bg-gray-200 text-gray-600'
-                  }`}
-                >
-                  <Map size={18} />
-                </button>
-              </div>
             </div>
           </div>
         </div>
@@ -283,16 +286,42 @@ export function ProjectsPage() {
 
       {/* Projects Grid */}
       {viewMode === 'grid' ? (
-        <section className="py-12">
+        <section className="py-8 sm:py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Active Filters Display */}
+            {activeFilters.length > 0 && (
+              <div className="mb-6 flex flex-wrap items-center gap-2">
+                <span className="text-xs sm:text-[13px]" style={{ color: '#666' }}>Active filters:</span>
+                {activeFilters.map((filter, index) => (
+                  <motion.button
+                    key={index}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    onClick={filter.onRemove}
+                    className="flex items-center gap-1.5 bg-[#416D50] text-white px-3 py-1.5 rounded-full text-xs hover:bg-[#365840] transition-colors"
+                  >
+                    <span>{filter.label}</span>
+                    <X size={14} />
+                  </motion.button>
+                ))}
+                <button
+                  onClick={clearAllFilters}
+                  className="text-xs sm:text-[13px] text-[#B08C44] hover:text-[#8a6d35] underline transition-colors"
+                >
+                  Clear all
+                </button>
+              </div>
+            )}
+            
             {filteredProjects.length === 0 ? (
-              <div className="text-center py-20">
-                <p style={{ fontSize: '19px', color: '#666' }}>
+              <div className="text-center py-16 sm:py-20">
+                <p className="text-base sm:text-lg lg:text-[19px]" style={{ color: '#666' }}>
                   No projects match your criteria. Try adjusting your filters.
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 {filteredProjects.map((project, index) => (
                   <motion.div
                     key={project.id}
@@ -301,50 +330,55 @@ export function ProjectsPage() {
                     transition={{ delay: index * 0.1 }}
                   >
                     <Link to={`/project/${project.id}`} className="group block">
-                      <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                      <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative">
                         {project.featured && (
-                          <div className="absolute top-4 right-4 z-10 bg-[#B08C44] text-white px-3 py-1 rounded-full" style={{ fontSize: '13px' }}>
+                          <div className="absolute top-4 right-4 z-10 bg-[#B08C44] text-white px-3 py-1 rounded-full text-xs sm:text-[13px]">
                             Featured
                           </div>
                         )}
-                        <div className="relative h-64 overflow-hidden">
+                        {project.isNew && (
+                          <div className="absolute top-4 right-4 z-10 bg-[#416D50] text-white px-3 py-1 rounded-full text-xs sm:text-[13px]">
+                            New
+                          </div>
+                        )}
+                        <div className="relative h-52 sm:h-64 overflow-hidden">
                           <img
                             src={project.image}
                             alt={project.name}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                           />
                         </div>
-                        <div className="p-6">
-                          <h4 className="mb-3" style={{ color: '#416D50', fontSize: '23px' }}>
+                        <div className="p-5 sm:p-6">
+                          <h4 className="mb-3 text-xl sm:text-[23px]" style={{ color: '#416D50' }}>
                             {project.name}
                           </h4>
                           <div className="flex items-center justify-between mb-4">
                             <div>
-                              <p style={{ fontSize: '13px', color: '#666' }}>Price/m²</p>
-                              <p style={{ fontSize: '19px', color: '#B08C44' }}>
+                              <p className="text-xs sm:text-[13px]" style={{ color: '#666' }}>Price/m²</p>
+                              <p className="text-base sm:text-[19px]" style={{ color: '#B08C44' }}>
                                 {project.price.toLocaleString()} - {project.maxPrice.toLocaleString()} EGP
                               </p>
                             </div>
                             <div>
-                              <p style={{ fontSize: '13px', color: '#666' }}>Units left</p>
-                              <p style={{ fontSize: '19px', color: '#416D50' }}>{project.units}</p>
+                              <p className="text-xs sm:text-[13px]" style={{ color: '#666' }}>Units left</p>
+                              <p className="text-base sm:text-[19px]" style={{ color: '#416D50' }}>{project.units}</p>
                             </div>
                           </div>
-                          <div className="flex items-center gap-4 pt-4 border-t">
+                          <div className="flex items-center gap-3 sm:gap-4 pt-4 border-t">
                             <div className="flex items-center gap-1">
-                              <Bed size={20} color="#666" />
-                              <span style={{ fontSize: '16px', color: '#666' }}>{project.beds}</span>
+                              <Bed size={18} className="sm:w-5 sm:h-5" color="#666" />
+                              <span className="text-sm sm:text-base" style={{ color: '#666' }}>{project.beds}</span>
                             </div>
                             <div className="flex items-center gap-1">
-                              <Bath size={20} color="#666" />
-                              <span style={{ fontSize: '16px', color: '#666' }}>{project.baths}</span>
+                              <Bath size={18} className="sm:w-5 sm:h-5" color="#666" />
+                              <span className="text-sm sm:text-base" style={{ color: '#666' }}>{project.baths}</span>
                             </div>
                             <div className="flex items-center gap-1">
-                              <Maximize size={20} color="#666" />
-                              <span style={{ fontSize: '16px', color: '#666' }}>{project.area}m²</span>
+                              <Maximize size={18} className="sm:w-5 sm:h-5" color="#666" />
+                              <span className="text-sm sm:text-base" style={{ color: '#666' }}>{project.area}m²</span>
                             </div>
                           </div>
-                          <button className="w-full mt-6 bg-[#416D50] text-white py-3 rounded-lg hover:bg-[#365840] transition-colors">
+                          <button className="w-full mt-6 bg-[#416D50] text-white py-2.5 sm:py-3 rounded-lg hover:bg-[#365840] transition-colors text-sm sm:text-base">
                             See more details
                           </button>
                         </div>
@@ -358,15 +392,15 @@ export function ProjectsPage() {
         </section>
       ) : (
         /* Map View */
-        <section className="py-12">
+        <section className="py-8 sm:py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-gray-200 rounded-xl h-[600px] flex items-center justify-center">
-              <div className="text-center">
-                <Map size={64} color="#666" className="mx-auto mb-4" />
-                <p style={{ fontSize: '19px', color: '#666' }}>
+            <div className="bg-gray-200 rounded-xl h-[400px] sm:h-[500px] lg:h-[600px] flex items-center justify-center">
+              <div className="text-center px-4">
+                <Map size={48} className="sm:w-16 sm:h-16 mx-auto mb-4" color="#666" />
+                <p className="text-base sm:text-lg lg:text-[19px]" style={{ color: '#666' }}>
                   Map view with project locations
                 </p>
-                <p style={{ fontSize: '16px', color: '#999' }}>
+                <p className="text-sm sm:text-base mt-2" style={{ color: '#999' }}>
                   Interactive map integration would go here
                 </p>
               </div>
