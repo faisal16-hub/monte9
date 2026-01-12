@@ -17,12 +17,17 @@ export function Navigation() {
 
   const isActive = (path: string) => location.pathname === path;
 
+  const handleLinkClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setIsMenuOpen(false);
+  };
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to="/" className="flex-shrink-0">
+          <Link to="/" onClick={handleLinkClick} className="flex-shrink-0">
             <img src={imgLogoGold} alt="Monte Developments" className="h-14 w-auto" />
           </Link>
 
@@ -32,6 +37,7 @@ export function Navigation() {
               <Link
                 key={link.path}
                 to={link.path}
+                onClick={handleLinkClick}
                 className={`relative transition-colors ${
                   isActive(link.path)
                     ? 'text-[#416D50]'
@@ -49,6 +55,7 @@ export function Navigation() {
             
             <Link
               to="/book-visit"
+              onClick={handleLinkClick}
               className="bg-[#416D50] text-white px-6 py-3 rounded-xl hover:bg-[#365840] transition-colors"
               style={{ fontSize: '16px' }}
             >
@@ -73,7 +80,7 @@ export function Navigation() {
                 <Link
                   key={link.path}
                   to={link.path}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={handleLinkClick}
                   className={`px-4 py-2 rounded-lg transition-colors ${
                     isActive(link.path)
                       ? 'bg-[#EFE6BA] text-[#416D50]'
@@ -86,7 +93,7 @@ export function Navigation() {
               ))}
               <Link
                 to="/book-visit"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={handleLinkClick}
                 className="bg-[#416D50] text-white px-4 py-3 rounded-xl text-center hover:bg-[#365840] transition-colors"
               >
                 Book a visit

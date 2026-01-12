@@ -1102,9 +1102,9 @@ export function SingleProjectPage() {
       {/* Contact Forms */}
       <section className="py-8 bg-[#E9E4D8]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
-            {/* Book a Meeting */}
-            <div className="bg-white rounded-lg p-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start relative">
+              {/* Book a Meeting */}
+              <div className="bg-white rounded-lg p-6">
               <h4 style={{ color: '#416D50', marginBottom: '16px', fontSize: '18px' }}>Book a meeting</h4>
               <form onSubmit={handleBooking} className="space-y-3">
                 <input
@@ -1160,19 +1160,29 @@ export function SingleProjectPage() {
               </form>
             </div>
 
-            {/* OR Divider */}
-            <div className="hidden lg:flex lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:z-10">
-              <div className="bg-[#E9E4D8] px-4">
-                <p style={{ fontSize: '36px', color: '#416D50' }}>OR</p>
+              {/* OR Divider */}
+              {/* Desktop - Vertical Divider */}
+              <div className="hidden lg:flex lg:absolute lg:left-1/2 lg:top-0 lg:-translate-x-1/2 lg:h-full lg:items-center lg:z-10">
+                <div className="flex flex-col items-center h-full py-4">
+                  <div className="flex-1 w-[1px] bg-gradient-to-b from-transparent via-[#B08C44] to-[#B08C44]"></div>
+                  <div className="bg-[#E9E4D8] px-4 py-2 my-2">
+                    <span style={{ fontSize: '18px', color: '#416D50', fontWeight: '500', letterSpacing: '2px' }}>OR</span>
+                  </div>
+                  <div className="flex-1 w-[1px] bg-gradient-to-t from-transparent via-[#B08C44] to-[#B08C44]"></div>
+                </div>
               </div>
-            </div>
-            <div className="lg:hidden text-center py-2">
-              <p style={{ fontSize: '36px', color: '#416D50' }}>OR</p>
-            </div>
+              {/* Mobile - Horizontal Divider */}
+              <div className="lg:hidden py-2">
+                <div className="flex items-center gap-4 my-8">
+                  <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-[#B08C44] to-[#B08C44]"></div>
+                  <span style={{ fontSize: '18px', color: '#416D50', fontWeight: '500', letterSpacing: '2px' }}>OR</span>
+                  <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent via-[#B08C44] to-[#B08C44]"></div>
+                </div>
+              </div>
 
-            {/* Request a Call */}
-            <div className="bg-white rounded-lg p-6">
-              <h4 style={{ color: '#416D50', marginBottom: '16px', fontSize: '18px' }}>Let us to give you a call</h4>
+              {/* Request a Call */}
+              <div className="bg-white rounded-lg p-6">
+                <h4 style={{ color: '#416D50', marginBottom: '16px', fontSize: '18px' }}>Let us to give you a call</h4>
               <form onSubmit={handleCallRequest} className="space-y-3">
                 <div className="relative w-full">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-2 pr-3 border-r border-gray-300">
