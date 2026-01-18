@@ -52,6 +52,7 @@ export function ContactPage() {
     setIsSubmitting(true);
 
     const payload = {
+      toEmail: 'monterealestate.eg@gmail.com',
       name: formData.name || '',
       email: formData.email,
       phone: formData.phone,
@@ -61,7 +62,7 @@ export function ContactPage() {
     console.log('Sending contact request:', payload);
 
     try {
-      const response = await fetch('https://monte.runasp.net/api/Email/contact', {
+      const response = await fetch('http://monte.runasp.net/api/Email/contact-us', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

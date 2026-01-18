@@ -251,4 +251,42 @@ html {
     clip: auto;
     white-space: normal;
   }
+
+  /* Custom scrollbar styles */
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #EFE6BA;
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #B08C44;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #416D50;
+  }
+
+  /* Firefox scrollbar */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #B08C44 #EFE6BA;
+  }
+
+  /* Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }

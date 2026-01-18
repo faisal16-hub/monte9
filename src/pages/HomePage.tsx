@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Shield, Layers, Scale, Leaf, Droplet, Lightbulb, Bed, Bath, Maximize } from 'lucide-react';
 import { motion } from 'motion/react';
+import { Helmet } from 'react-helmet-async';
 
 export function HomePage() {
   const trustFeatures = [
@@ -26,10 +27,10 @@ export function HomePage() {
       icon: Scale,
       title: 'Fairness',
       description: 'Competitive pricing with no hidden costs.',
-      gradient: '#fff',
+      gradient: 'linear-gradient(127.284deg, rgb(176, 140, 68) 0%, rgb(239, 230, 186) 186%)',
       iconBg: '#416D50',
       iconColor: '#fff',
-      textColor: '#416D50',
+      textColor: '#fff',
     },
   ];
 
@@ -76,13 +77,23 @@ export function HomePage() {
 
   return (
     <div className="pt-16">
+      <Helmet>
+        <title>Monte Developments - Eco-Friendly Real Estate in New Cairo, Egypt</title>
+        <meta name="description" content="Monte Developments builds sustainable, eco-friendly residential properties in Egypt's prime locations. Explore our portfolio of green homes in New Cairo, featuring energy-efficient designs and modern amenities." />
+        <meta property="og:title" content="Monte Developments - Building Eco-Friendly Legacies" />
+        <meta property="og:description" content="Discover sustainable living with Monte Developments. Eco-friendly apartments and homes in New Cairo with green rooftops, solar panels, and water conservation." />
+        <meta property="og:type" content="website" />
+        <meta name="keywords" content="eco-friendly real estate Egypt, sustainable homes New Cairo, green buildings Egypt, Monte Developments, apartments New Cairo, residential properties Egypt" />
+      </Helmet>
+
       {/* Hero Section */}
       <section className="relative h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden">
         <div className="absolute inset-0">
           <img
             src="https://images.unsplash.com/photo-1708085342347-6d0dd245f90e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBlY28lMjBob3VzZSUyMGV4dGVyaW9yfGVufDF8fHx8MTc2NTYzNTQxNXww&ixlib=rb-4.1.0&q=80&w=1080"
-            alt="Eco-friendly property"
+            alt="Modern eco-friendly residential building showcasing sustainable architecture in New Cairo"
             className="w-full h-full object-cover"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30" />
         </div>
@@ -92,10 +103,19 @@ export function HomePage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-xl w-full"
+            className="max-w-2xl w-full"
           >
             <h1 className="text-white mb-4 text-3xl sm:text-4xl md:text-5xl lg:text-[56px]" style={{ lineHeight: '1.2' }}>
-              We're here to help you find your dream home.
+              We build more than homes,<br />We build <motion.span
+                animate={{ 
+                  color: ['#B08C44', '#EFE6BA', '#B08C44', '#416D50', '#B08C44']
+                }}
+                transition={{ 
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >Legacies</motion.span>
             </h1>
             <p className="text-white/90 mb-6 text-base sm:text-lg" style={{ lineHeight: '1.6' }}>
               Every home reflects our commitment to quality, craftsmanship and people-centered real estate solutions.
@@ -284,7 +304,7 @@ export function HomePage() {
                       )}
                       <img
                         src={project.image}
-                        alt={project.name}
+                        alt={`${project.name} - ${project.beds} bedroom, ${project.baths} bathroom apartment in New Cairo`}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
                     </div>

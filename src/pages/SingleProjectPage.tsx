@@ -59,6 +59,56 @@ const projectData: { [key: string]: any } = {
       { phase: 'Pouring the first floor columns', progress: 70, color: '#F9B233' },
       { phase: 'Pouring the second ceiling', progress: 40, color: '#DC6544' },
     ],
+    constructionTimeline: [
+      { 
+        stageName: 'Excavation & Foundation', 
+        stageDate: 'January 2026',
+        image: 'https://images.unsplash.com/photo-1581094271901-8022df4466f9?w=800&h=600&fit=crop',
+        status: 'done'
+      },
+      { 
+        stageName: 'Ground Floor Structure', 
+        stageDate: 'February 2026',
+        image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&h=600&fit=crop',
+        status: 'done'
+      },
+      { 
+        stageName: 'First Floor Construction', 
+        stageDate: 'March 2026',
+        image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800&h=600&fit=crop',
+        status: 'in-progress'
+      },
+      { 
+        stageName: 'Second Floor Construction', 
+        stageDate: 'April 2026',
+        image: null,
+        status: 'upcoming'
+      },
+      { 
+        stageName: 'Roof & Structure Completion', 
+        stageDate: 'May 2026',
+        image: null,
+        status: 'upcoming'
+      },
+      { 
+        stageName: 'MEP Installation', 
+        stageDate: 'June 2026',
+        image: null,
+        status: 'upcoming'
+      },
+      { 
+        stageName: 'Interior Finishes', 
+        stageDate: 'July 2026',
+        image: null,
+        status: 'upcoming'
+      },
+      { 
+        stageName: 'Final Inspection', 
+        stageDate: 'August 2026',
+        image: null,
+        status: 'upcoming'
+      },
+    ],
     floors: [
       {
         name: 'Ground Floor',
@@ -553,6 +603,7 @@ export function SingleProjectPage() {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [lightboxImages, setLightboxImages] = useState<string[]>([]);
   const [lightboxInitialIndex, setLightboxInitialIndex] = useState(0);
+  const [galleryImageIndex, setGalleryImageIndex] = useState(0);
 
   const [bookingData, setBookingData] = useState({ 
     email: '', 
@@ -562,6 +613,16 @@ export function SingleProjectPage() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [callData, setCallData] = useState({ phone: '', countryCode: '+20' });
+
+  // Collect all unit floor plans from the project
+  const allFloorPlans = project.floors?.flatMap((floor: any) => 
+    floor.units.map((unit: any) => unit.floorPlan).filter(Boolean)
+  ) || [];
+
+  // Combine project images with ALL floor plans
+  const [galleryImages] = useState<string[]>(() => {
+    return [...project.images, ...allFloorPlans];
+  });
 
   // Scroll tracking for sticky header
   const { scrollY } = useScroll();
@@ -574,6 +635,14 @@ export function SingleProjectPage() {
 
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + project.images.length) % project.images.length);
+  };
+
+  const nextGalleryImage = () => {
+    setGalleryImageIndex((prev) => (prev + 1) % galleryImages.length);
+  };
+
+  const prevGalleryImage = () => {
+    setGalleryImageIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length);
   };
 
   const handleBooking = async (e: React.FormEvent) => {
@@ -593,6 +662,7 @@ export function SingleProjectPage() {
     setIsSubmitting(true);
 
     const payload = {
+      toEmail: 'monterealestate.eg@gmail.com',
       email: bookingData.email || '',
       phone: bookingData.phone,
       meetingType: bookingData.meetingType,
@@ -603,7 +673,7 @@ export function SingleProjectPage() {
     console.log('Sending booking request:', payload);
 
     try {
-      const response = await fetch('https://monte.runasp.net/api/Email/meeting-book', {
+      const response = await fetch('http://monte.runasp.net/api/Email/meeting-book', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -650,10 +720,68 @@ export function SingleProjectPage() {
     }
   };
 
-  const handleCallRequest = (e: React.FormEvent) => {
+  const handleCallRequest = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success('Call request received! We\'ll call you shortly.');
-    setCallData({ phone: '', countryCode: '+20' });
+    
+    // Validate phone number
+    if (!callData.phone) {
+      toast.error('Phone number is required');
+      return;
+    }
+    
+    setIsSubmitting(true);
+
+    const payload = {
+      toEmail: 'monterealestate.eg@gmail.com',
+      phone: callData.countryCode + callData.phone,
+      projectName: project.name,
+    };
+
+    console.log('Sending call-back request:', payload);
+
+    try {
+      const response = await fetch('http://monte.runasp.net/api/Email/call-back', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      console.log('Response status:', response.status);
+
+      if (response.ok) {
+        const responseData = await response.json().catch(() => null);
+        console.log('Response data:', responseData);
+        toast.success('Call request received! We\'ll call you shortly.');
+        setCallData({ phone: '', countryCode: '+20' });
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Error response:', errorData);
+        toast.error(errorData.message || `Server error: ${response.status}. Please try again.`);
+      }
+    } catch (error) {
+      console.error('Error sending call-back request:', error);
+      
+      // Show detailed error information
+      if (error instanceof TypeError && error.message === 'Failed to fetch') {
+        toast.error(
+          'Cannot connect to server. This may be a CORS issue. Your request details have been logged - please contact us at: +201000000000',
+          { duration: 8000 }
+        );
+        
+        // Log the data that would have been sent for user reference
+        console.log('=== CALL-BACK DATA (for manual submission) ===');
+        console.log('Project:', project.name);
+        console.log('Phone:', callData.countryCode + callData.phone);
+        console.log('==========================================');
+      } else {
+        toast.error('Unable to send request. Please call us at: +201000000000');
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -720,24 +848,80 @@ export function SingleProjectPage() {
 
           {/* Image Gallery */}
           <div className="mb-6">
-            <div 
-              className="relative h-72 sm:h-96 rounded-lg overflow-hidden cursor-pointer group"
-              onClick={() => {
-                setLightboxImages(project.images);
-                setLightboxInitialIndex(0);
-                setIsLightboxOpen(true);
-              }}
-            >
-              <img
-                src={project.images[0]}
-                alt={project.name}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 rounded-full p-3">
-                  <ZoomIn size={24} className="text-[#416D50]" />
+            <div className="relative">
+              <div 
+                className="relative h-72 sm:h-96 rounded-lg overflow-hidden cursor-pointer group bg-gray-100"
+                onClick={() => {
+                  setLightboxImages(galleryImages);
+                  setLightboxInitialIndex(galleryImageIndex);
+                  setIsLightboxOpen(true);
+                }}
+              >
+                <img
+                  src={galleryImages[galleryImageIndex]}
+                  alt={`${project.name} - Image ${galleryImageIndex + 1}`}
+                  className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 rounded-full p-3">
+                    <ZoomIn size={24} className="text-[#416D50]" />
+                  </div>
+                </div>
+
+                {/* Navigation Arrows */}
+                {galleryImages.length > 1 && (
+                  <>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        prevGalleryImage();
+                      }}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all hover:scale-110"
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft size={24} className="text-[#416D50]" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        nextGalleryImage();
+                      }}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all hover:scale-110"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight size={24} className="text-[#416D50]" />
+                    </button>
+                  </>
+                )}
+
+                {/* Image Counter */}
+                <div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1.5 rounded-full text-sm">
+                  {galleryImageIndex + 1} / {galleryImages.length}
                 </div>
               </div>
+
+              {/* Thumbnail Navigation */}
+              {galleryImages.length > 1 && (
+                <div className="flex gap-2 mt-4 overflow-x-auto pb-2 custom-scrollbar">
+                  {galleryImages.map((img, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setGalleryImageIndex(idx)}
+                      className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
+                        idx === galleryImageIndex 
+                          ? 'border-[#416D50] shadow-lg scale-105' 
+                          : 'border-transparent hover:border-[#B08C44]'
+                      }`}
+                    >
+                      <img
+                        src={img}
+                        alt={`Thumbnail ${idx + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
@@ -756,7 +940,7 @@ export function SingleProjectPage() {
               <p style={{ fontSize: '16px', color: '#416D50' }}>{project.totalFloors}</p>
             </div>
             <a
-              href="https://wa.me/01040503547"
+              href="https://wa.me/message/35HKMU6ZHDRGC1"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 bg-[#25D366] text-white py-3 px-4 rounded-lg hover:bg-[#20BA5A] transition-colors"
@@ -967,7 +1151,7 @@ export function SingleProjectPage() {
       {/* Unit Types */}
       <section className="py-8 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 style={{ color: '#416D50', marginBottom: '24px', fontSize: '24px' }}>Available Units</h3>
+          <h3 style={{ color: '#416D50', marginBottom: '24px', fontSize: '24px' }}>Project Units</h3>
 
           {project.floors && Array.isArray(project.floors) && project.floors.length > 0 ? (
             <Tabs value={selectedFloor} onValueChange={setSelectedFloor} className="w-full">
@@ -1076,28 +1260,163 @@ export function SingleProjectPage() {
         </div>
       </section>
 
-      {/* Project Timeline */}
-      <section className="py-8 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 style={{ color: '#416D50', marginBottom: '16px' }}>Project timeline</h3>
-          <div className="space-y-3">
-            {project.timeline.map((item: any, index: number) => (
-              <div key={index}>
-                <div className="flex justify-between mb-1">
-                  <p style={{ fontSize: '14px', color: '#666' }}>{item.phase}</p>
-                  <p style={{ fontSize: '14px', color: item.color }}>{item.progress}%</p>
-                </div>
-                <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                  <div
-                    className="h-full transition-all duration-500"
-                    style={{ width: `${item.progress}%`, backgroundColor: item.color }}
-                  />
-                </div>
+      {/* Construction Progress Timeline */}
+      {project.constructionTimeline && project.constructionTimeline.length > 0 && (
+        <section className="pt-12 pb-4 bg-[#E9E4D8]">
+          <div className="max-w-7xl mx-auto">
+            <h3 style={{ color: '#416D50', marginBottom: '32px', fontSize: '24px', paddingLeft: '1rem', paddingRight: '1rem' }}>Construction Progress</h3>
+            
+            {/* Timeline Container */}
+            <div 
+              className="relative bg-transparent rounded-lg p-6 sm:p-8 overflow-x-auto custom-scrollbar"
+              style={{ 
+                scrollBehavior: 'smooth',
+                WebkitOverflowScrolling: 'touch'
+              }}
+            >
+              
+              {/* Timeline Stages */}
+              <div className="flex gap-8 sm:gap-12 pb-4 min-w-max relative">
+                {/* Continuous Horizontal Line */}
+                <div 
+                  className="absolute"
+                  style={{
+                    top: '131px',
+                    left: '70px',
+                    right: '70px',
+                    height: '2px',
+                    background: `linear-gradient(to right, 
+                      #416D50 0%, 
+                      #416D50 ${(project.constructionTimeline.filter((s: any) => s.status === 'done').length / project.constructionTimeline.length) * 100}%, 
+                      #B08C44 ${(project.constructionTimeline.filter((s: any) => s.status === 'done').length / project.constructionTimeline.length) * 100}%, 
+                      #B08C44 ${((project.constructionTimeline.filter((s: any) => s.status === 'done').length + 1) / project.constructionTimeline.length) * 100}%, 
+                      #B0B0B0 ${((project.constructionTimeline.filter((s: any) => s.status === 'done').length + 1) / project.constructionTimeline.length) * 100}%, 
+                      #B0B0B0 100%)`,
+                    zIndex: 1
+                  }}
+                />
+                
+                {project.constructionTimeline.map((stage: any, index: number) => {
+                  const getStageColor = (status: string) => {
+                    switch(status) {
+                      case 'done': return '#416D50';
+                      case 'in-progress': return '#B08C44';
+                      case 'upcoming': return '#B0B0B0';
+                      default: return '#B0B0B0';
+                    }
+                  };
+                  
+                  const stageColor = getStageColor(stage.status);
+                  
+                  return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="relative flex flex-col items-center"
+                    style={{ minWidth: '140px', maxWidth: '160px' }}
+                  >
+                    {/* Stage Name */}
+                    <h5 
+                      className="text-center mb-2 min-h-[48px] flex items-center justify-center"
+                      style={{ 
+                        fontSize: '19px',
+                        color: stageColor,
+                        fontWeight: '500',
+                        lineHeight: '1.3'
+                      }}
+                    >
+                      {stage.stageName}
+                    </h5>
+                    
+                    {/* Stage Date */}
+                    <p 
+                      className="text-center mb-6"
+                      style={{ 
+                        fontSize: '13px',
+                        color: stageColor,
+                        opacity: 0.8
+                      }}
+                    >
+                      {stage.stageDate}
+                    </p>
+                    
+                    {/* Vertical Connector Line */}
+                    <div 
+                      className="w-px"
+                      style={{ height: '24px', backgroundColor: stageColor, opacity: 0.3 }}
+                    />
+                    
+                    {/* Timeline Circle */}
+                    <motion.div
+                      animate={stage.status === 'in-progress' ? {
+                        scale: [1, 1.2, 1],
+                      } : {}}
+                      transition={{
+                        duration: 2,
+                        repeat: stage.status === 'in-progress' ? Infinity : 0,
+                        ease: "easeInOut"
+                      }}
+                      className="relative z-10 rounded-full flex items-center justify-center"
+                      style={{
+                        width: stage.status === 'in-progress' ? '16px' : '14px',
+                        height: stage.status === 'in-progress' ? '16px' : '14px',
+                        backgroundColor: stageColor,
+                        border: `${stage.status === 'in-progress' ? '3px' : '2px'} solid ${stageColor}`,
+                        boxShadow: stage.status === 'in-progress' ? `0 0 0 4px ${stageColor}33` : 'none'
+                      }}
+                    />
+                    
+                    {/* Vertical Connector Line (bottom) */}
+                    <div 
+                      className="w-px"
+                      style={{ height: '24px', backgroundColor: stageColor, opacity: 0.3 }}
+                    />
+                    
+                    {/* Thumbnail Image */}
+                    <div className="mt-4">
+                      {stage.image ? (
+                        <motion.button
+                          onClick={() => {
+                            setLightboxImages([stage.image]);
+                            setLightboxInitialIndex(0);
+                            setIsLightboxOpen(true);
+                          }}
+                          whileHover={{ scale: 1.05 }}
+                          className="rounded-lg overflow-hidden cursor-pointer border-2 border-transparent hover:border-[#B08C44] transition-all"
+                          style={{
+                            width: '70px',
+                            height: '70px',
+                          }}
+                        >
+                          <img 
+                            src={stage.image} 
+                            alt={stage.stageName}
+                            className="w-full h-full object-cover"
+                          />
+                        </motion.button>
+                      ) : (
+                        <div 
+                          className="rounded-lg border-2 border-gray-300 border-dashed flex items-center justify-center bg-gray-50"
+                          style={{
+                            width: '70px',
+                            height: '70px',
+                          }}
+                        >
+                          <Camera size={24} className="text-gray-400" />
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                  );
+                })}
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Contact Forms */}
       <section className="py-8 bg-[#E9E4D8]">

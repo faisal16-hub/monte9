@@ -4,6 +4,7 @@ import { Bed, Bath, Maximize, SlidersHorizontal, Map, Grid, ChevronDown, Chevron
 import { motion } from 'motion/react';
 import { Slider } from '../components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
+import { Helmet } from 'react-helmet-async';
 
 const allProjects = [
   {
@@ -144,6 +145,13 @@ export function ProjectsPage() {
 
   return (
     <div className="pt-16 sm:pt-20 min-h-screen bg-gray-50">
+      <Helmet>
+        <title>All Projects - Monte Developments | Eco-Friendly Apartments in New Cairo</title>
+        <meta name="description" content="Browse our complete portfolio of eco-friendly residential projects in New Cairo. Filter by price, location, and size to find your perfect sustainable home." />
+        <meta property="og:title" content="Monte Developments Projects - Sustainable Living in Egypt" />
+        <meta property="og:description" content="Explore eco-friendly apartments and residential projects in New Cairo. Advanced filters to find your ideal sustainable home." />
+      </Helmet>
+
       {/* Header */}
       <section className="bg-[#416D50] text-white py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -316,9 +324,24 @@ export function ProjectsPage() {
             
             {filteredProjects.length === 0 ? (
               <div className="text-center py-16 sm:py-20">
-                <p className="text-base sm:text-lg lg:text-[19px]" style={{ color: '#666' }}>
-                  No projects match your criteria. Try adjusting your filters.
+                <div className="mb-6">
+                  <SlidersHorizontal size={48} className="mx-auto mb-4 text-gray-400" />
+                </div>
+                <h3 className="mb-3" style={{ color: '#416D50' }}>
+                  No projects match your filters
+                </h3>
+                <p className="text-base sm:text-lg mb-6" style={{ color: '#666' }}>
+                  Try adjusting your search criteria to find more properties
                 </p>
+                {activeFilters.length > 0 && (
+                  <button
+                    onClick={clearAllFilters}
+                    className="bg-[#416D50] text-white px-6 py-3 rounded-lg hover:bg-[#365840] transition-colors inline-flex items-center gap-2"
+                  >
+                    <X size={18} />
+                    Clear all filters
+                  </button>
+                )}
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -344,8 +367,9 @@ export function ProjectsPage() {
                         <div className="relative h-52 sm:h-64 overflow-hidden">
                           <img
                             src={project.image}
-                            alt={project.name}
+                            alt={`${project.name} - ${project.beds} bedroom, ${project.baths} bathroom apartment with ${project.area}m² area in ${project.location}`}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            loading="lazy"
                           />
                         </div>
                         <div className="p-5 sm:p-6">

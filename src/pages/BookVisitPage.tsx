@@ -441,7 +441,7 @@ export function BookVisitPage() {
                 <span style={{ color: '#416D50', fontWeight: '600' }}>+20 104 050 3547</span>
               </a>
               <a
-                href="https://wa.me/01040503547"
+                href="https://wa.me/message/35HKMU6ZHDRGC1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 bg-[#25D366] text-white rounded-lg hover:bg-[#20BA5A] transition-colors"
