@@ -595,6 +595,7 @@ const projectData: { [key: string]: any } = {
 };
 
 export function SingleProjectPage() {
+  const API_URL = "http://monte.runasp.net/api";
   const { id } = useParams<{ id: string }>();
   const project = projectData[id || '1'] || projectData['1'];
   
@@ -662,22 +663,21 @@ export function SingleProjectPage() {
     setIsSubmitting(true);
 
     const payload = {
-      toEmail: 'monterealestate.eg@gmail.com',
-      email: bookingData.email || '',
+      sendTo: 'monterealestate.eg@gmail.com',
+      userEmail: bookingData.email || '',
       phone: bookingData.phone,
-      meetingType: bookingData.meetingType,
+      option: bookingData.meetingType,
       date: bookingData.date,
-      projectName: project.name,
     };
 
     console.log('Sending booking request:', payload);
 
     try {
-      const response = await fetch('http://monte.runasp.net/api/Email/meeting-book', {
+      const response = await fetch(`${API_URL}/Email/meeting-book`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
+          Accept: 'application/json',
         },
         body: JSON.stringify(payload),
       });
@@ -732,9 +732,8 @@ export function SingleProjectPage() {
     setIsSubmitting(true);
 
     const payload = {
-      toEmail: 'monterealestate.eg@gmail.com',
+      sendTo: 'mazenkhtab11@gmail.com',
       phone: callData.countryCode + callData.phone,
-      projectName: project.name,
     };
 
     console.log('Sending call-back request:', payload);
@@ -744,7 +743,7 @@ export function SingleProjectPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
+          Accept: 'application/json',
         },
         body: JSON.stringify(payload),
       });
