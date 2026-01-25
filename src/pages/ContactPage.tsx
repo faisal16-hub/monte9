@@ -53,7 +53,7 @@ export function ContactPage() {
     setIsSubmitting(true);
 
     const payload = {
-      sendTo: 'monterealestate.eg@gmail.com',
+      sendTo: 'montedevelopments@gmail.com',
       userName: formData.name || '',
       userEmail: formData.email,
       phone: formData.phone,
