@@ -663,7 +663,7 @@ export function SingleProjectPage() {
     setIsSubmitting(true);
 
     const payload = {
-      sendTo: 'monterealestate.eg@gmail.com',
+      sendTo: 'montedevelopments@gmail.com',
       userEmail: bookingData.email || '',
       phone: bookingData.phone,
       option: bookingData.meetingType,
@@ -699,19 +699,7 @@ export function SingleProjectPage() {
       
       // Show detailed error information
       if (error instanceof TypeError && error.message === 'Failed to fetch') {
-        toast.error(
-          'Cannot connect to server. This may be a CORS issue. Your request details have been logged - please contact us at: +201000000000',
-          { duration: 8000 }
-        );
-        
-        // Log the data that would have been sent for user reference
-        console.log('=== BOOKING DATA (for manual submission) ===');
-        console.log('Project:', project.name);
-        console.log('Email:', bookingData.email || 'Not provided');
-        console.log('Phone:', bookingData.phone);
-        console.log('Meeting Type:', bookingData.meetingType);
-        console.log('Date:', bookingData.date);
-        console.log('==========================================');
+        toast.error(error.message);
       } else {
         toast.error('Unable to send request. Please call us at: +201000000000');
       }
@@ -732,14 +720,14 @@ export function SingleProjectPage() {
     setIsSubmitting(true);
 
     const payload = {
-      sendTo: 'mazenkhtab11@gmail.com',
+      sendTo: 'montedevelopments@gmail.com',
       phone: callData.countryCode + callData.phone,
     };
 
     console.log('Sending call-back request:', payload);
 
     try {
-      const response = await fetch('https://monte.runasp.net/api/Email/call-back', {
+      const response = await fetch(`${API_URL}/Email/call-back`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -765,23 +753,13 @@ export function SingleProjectPage() {
       
       // Show detailed error information
       if (error instanceof TypeError && error.message === 'Failed to fetch') {
-        toast.error(
-          'Cannot connect to server. This may be a CORS issue. Your request details have been logged - please contact us at: +201000000000',
-          { duration: 8000 }
-        );
-        
-        // Log the data that would have been sent for user reference
-        console.log('=== CALL-BACK DATA (for manual submission) ===');
-        console.log('Project:', project.name);
-        console.log('Phone:', callData.countryCode + callData.phone);
-        console.log('==========================================');
+        toast.error(error.message);
       } else {
         toast.error('Unable to send request. Please call us at: +201000000000');
       }
     } finally {
       setIsSubmitting(false);
     }
-  };
 
   return (
     <div className="pt-16 min-h-screen bg-[#E9E4D8]">

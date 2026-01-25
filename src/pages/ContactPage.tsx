@@ -4,6 +4,7 @@ import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, Loader2 } from 'luc
 import { toast } from 'sonner@2.0.3';
 
 export function ContactPage() {
+  const API_URL = "https://monte.runasp.net/api";
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -52,21 +53,21 @@ export function ContactPage() {
     setIsSubmitting(true);
 
     const payload = {
-      toEmail: 'monterealestate.eg@gmail.com',
-      name: formData.name || '',
-      email: formData.email,
+      sendTo: 'monterealestate.eg@gmail.com',
+      userName: formData.name || '',
+      userEmail: formData.email,
       phone: formData.phone,
-      message: formData.message,
+      question: formData.message,
     };
 
     console.log('Sending contact request:', payload);
 
     try {
-      const response = await fetch('http://monte.runasp.net/api/Email/contact-us', {
+      const response = await fetch(`${API_URL}/Email/contact-us`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
+          Accept: 'application/json',
         },
         body: JSON.stringify(payload),
       });
@@ -92,17 +93,8 @@ export function ContactPage() {
       console.error('Error sending contact form:', error);
       
       if (error instanceof TypeError && error.message === 'Failed to fetch') {
-        toast.error(
-          'Cannot connect to server. Your message details have been logged - please call us at: 01062622625',
-          { duration: 8000 }
-        );
-        
-        console.log('=== CONTACT DATA (for manual submission) ===');
-        console.log('Name:', formData.name || 'Not provided');
-        console.log('Email:', formData.email);
-        console.log('Phone:', formData.phone);
-        console.log('Message:', formData.message);
-        console.log('==========================================');
+        toast.error(error.message);
+
       } else {
         toast.error('Unable to send message. Please call us at: 01062622625');
       }
