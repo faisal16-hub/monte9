@@ -4,7 +4,7 @@ import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, Loader2 } from 'luc
 import { toast } from 'sonner@2.0.3';
 
 export function ContactPage() {
-  const API_URL = "https://monte.runasp.net/api";
+   const API_URL = "https://monte.runasp.net/api";
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -57,17 +57,18 @@ export function ContactPage() {
       userName: formData.name || '',
       userEmail: formData.email,
       phone: formData.phone,
-      question: formData.message,
+       question: formData.message,
     };
 
     console.log('Sending contact request:', payload);
 
     try {
-      const response = await fetch(`${API_URL}/Email/contact-us`, {
+         const response = await fetch(`${API_URL}/Email/contact`, {
         method: 'POST',
+        mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'application/json',
+            Accept: 'application/json',
         },
         body: JSON.stringify(payload),
       });
@@ -93,7 +94,7 @@ export function ContactPage() {
       console.error('Error sending contact form:', error);
       
       if (error instanceof TypeError && error.message === 'Failed to fetch') {
-        toast.error(error.message);
+       toast.error('Network error. Please check your connection or contact us directly at: 01062622625');
 
       } else {
         toast.error('Unable to send message. Please call us at: 01062622625');

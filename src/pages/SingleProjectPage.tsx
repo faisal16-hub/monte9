@@ -760,6 +760,7 @@ export function SingleProjectPage() {
     } finally {
       setIsSubmitting(false);
     }
+  };
 
   return (
     <div className="pt-16 min-h-screen bg-[#E9E4D8]">

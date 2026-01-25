@@ -45,6 +45,7 @@ export function BookVisitPage() {
     setIsSubmitting(true);
 
     const payload = {
+      sendTo: 'monterealestate.eg@gmail.com',
       name: formData.name,
       email: formData.email || '',
       phone: formData.phone,
@@ -60,6 +61,7 @@ export function BookVisitPage() {
     try {
       const response = await fetch('https://monte.runasp.net/api/Email/meeting-book', {
         method: 'POST',
+        mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
