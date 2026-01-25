@@ -595,7 +595,7 @@ const projectData: { [key: string]: any } = {
 };
 
 export function SingleProjectPage() {
-  const API_URL = "http://monte.runasp.net/api";
+  const API_URL = "https://monte.runasp.net/api";
   const { id } = useParams<{ id: string }>();
   const project = projectData[id || '1'] || projectData['1'];
   
@@ -739,7 +739,7 @@ export function SingleProjectPage() {
     console.log('Sending call-back request:', payload);
 
     try {
-      const response = await fetch('http://monte.runasp.net/api/Email/call-back', {
+      const response = await fetch('https://monte.runasp.net/api/Email/call-back', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
