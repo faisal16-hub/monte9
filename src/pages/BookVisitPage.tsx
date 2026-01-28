@@ -4,6 +4,8 @@ import { Calendar, Clock, MapPin, Video, Phone, Mail, CheckCircle, Building2, Us
 import { toast } from 'sonner@2.0.3';
 
 export function BookVisitPage() {
+  const API_URL = "https://monte.runasp.net/api";
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -59,12 +61,12 @@ export function BookVisitPage() {
     console.log('Sending booking request:', payload);
 
     try {
-      const response = await fetch('https://monte.runasp.net/api/Email/meeting-book', {
+      const response = await fetch(`${API_URL}/Email/visit-book`, {
         method: 'POST',
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
+          Accept: 'application/json',
         },
         body: JSON.stringify(payload),
       });

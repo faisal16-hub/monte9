@@ -63,12 +63,12 @@ export function ContactPage() {
     console.log('Sending contact request:', payload);
 
     try {
-         const response = await fetch(`${API_URL}/Email/contact`, {
+      const response = await fetch(`${API_URL}/Email/contact-us`, {
         method: 'POST',
         mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
-            Accept: 'application/json',
+          Accept: 'application/json',
         },
         body: JSON.stringify(payload),
       });
