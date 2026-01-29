@@ -54,7 +54,7 @@ export function BookVisitPage() {
       meetingType: formData.meetingType,
       date: formData.date,
       time: formData.time,
-      projectName: formData.projectInterest || 'General Inquiry',
+      projectInterest: formData.projectInterest || 'General Inquiry',
       message: formData.message || '',
     };
 

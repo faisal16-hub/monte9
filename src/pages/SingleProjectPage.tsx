@@ -19,7 +19,7 @@ import imgFloorPlan2 from "figma:asset/0015803f1ca5fbe8a48447d5aadb139da692494e.
 import imgFloorPlan3 from "figma:asset/7c3ad62e7364a726f4b40ee5ea59380eb0df1975.png";
 import imgMeeting from "figma:asset/d791c4c04d6a2793b4ada98152d73053e1f37787.png";
 
-const imgUnitPhoto = "https://www.dropbox.com/scl/fi/w3r6wo5qalsardwe7s8rl/WhatsApp-Image-2026-01-12-at-12.50.24-AM.jpeg?rlkey=01g3z8l0wnoyk7mcvsvno2wnr&st=dxohq7pq&raw=1";
+const imgUnitPhoto = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80";
 
 const projectData: { [key: string]: any } = {
   '1': {
@@ -39,7 +39,7 @@ const projectData: { [key: string]: any } = {
       installmentCount: 16,
       annualPayments: 0,
     },
-    images: ['https://www.dropbox.com/scl/fi/w3r6wo5qalsardwe7s8rl/WhatsApp-Image-2026-01-12-at-12.50.24-AM.jpeg?rlkey=01g3z8l0wnoyk7mcvsvno2wnr&st=dxohq7pq&raw=1'],
+    images: ['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80'],
     buildingFeatures: [
       { icon: Car, name: 'Garage' },
       { icon: ElevatorIcon, name: 'Elevator' },
@@ -121,7 +121,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/35c2onidnilxsm39ei4np/1.jpeg?rlkey=hfngwqy2ogqz8mg2emfekwniu&st=9i38lat3&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80',
           },
           {
             id: 2,
@@ -131,7 +131,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 1,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/tl8zcm0piucjv5b7jvg4v/2.jpeg?rlkey=joq93yf9v4dul872x16elef69&st=nxx7nrsz&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80',
           },
         ],
       },
@@ -146,7 +146,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/anv7tt4l870fsue25oyfb/3-6-9.jpeg?rlkey=t5cmh6nhtq8uwkn44gnl4xva7&st=enwgq7at&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80',
           },
           {
             id: 4,
@@ -156,7 +156,7 @@ const projectData: { [key: string]: any } = {
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/07nvmkua9pkucvxh5xdgl/4-7-10.jpeg?rlkey=g72ussfj0wp8sqo42n01t7u8q&st=jhphcrby&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
           },
           {
             id: 5,
@@ -166,7 +166,7 @@ const projectData: { [key: string]: any } = {
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/xq3mcb91gx9wrjjetqmge/5-8-11.jpeg?rlkey=aok8f6v3e5ttgftfsz5nvay0a&st=dc2plimf&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
           },
         ],
       },
@@ -181,7 +181,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/anv7tt4l870fsue25oyfb/3-6-9.jpeg?rlkey=t5cmh6nhtq8uwkn44gnl4xva7&st=enwgq7at&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80',
           },
           {
             id: 7,
@@ -191,7 +191,7 @@ const projectData: { [key: string]: any } = {
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/07nvmkua9pkucvxh5xdgl/4-7-10.jpeg?rlkey=g72ussfj0wp8sqo42n01t7u8q&st=jhphcrby&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
           },
           {
             id: 8,
@@ -201,7 +201,7 @@ const projectData: { [key: string]: any } = {
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/xq3mcb91gx9wrjjetqmge/5-8-11.jpeg?rlkey=aok8f6v3e5ttgftfsz5nvay0a&st=dc2plimf&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
           },
         ],
       },
@@ -216,7 +216,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/anv7tt4l870fsue25oyfb/3-6-9.jpeg?rlkey=t5cmh6nhtq8uwkn44gnl4xva7&st=enwgq7at&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80',
           },
           {
             id: 10,
@@ -226,7 +226,7 @@ const projectData: { [key: string]: any } = {
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/07nvmkua9pkucvxh5xdgl/4-7-10.jpeg?rlkey=g72ussfj0wp8sqo42n01t7u8q&st=jhphcrby&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
           },
           {
             id: 11,
@@ -236,7 +236,7 @@ const projectData: { [key: string]: any } = {
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/xq3mcb91gx9wrjjetqmge/5-8-11.jpeg?rlkey=aok8f6v3e5ttgftfsz5nvay0a&st=dc2plimf&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
           },
         ],
       },
@@ -259,7 +259,7 @@ const projectData: { [key: string]: any } = {
       installmentCount: 20,
       annualPayments: 2,
     },
-    images: ['https://www.dropbox.com/scl/fi/3gvyuzyai9zeg61wtkue6/Logo-Gold.png?rlkey=nsu2yinbsy62ee0md23gr9oby&st=yh7gqjgw&raw=1'],
+    images: ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80'],
     buildingFeatures: [
       { icon: Car, name: 'Garage' },
       { icon: ElevatorIcon, name: 'Elevator' },
@@ -291,7 +291,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/frfp1ajd5vn1nvbdc42ej/1.jpeg?rlkey=c0lzxlrr2aqzr8jhdp0flzj3j&st=nwba5vn5&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80',
           },
           {
             id: 2,
@@ -301,7 +301,7 @@ const projectData: { [key: string]: any } = {
             beds: 2,
             baths: 2,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/bx95dxfqljscfbssti7go/2.jpeg?rlkey=elwif8th60gohfidrk6d78ehb&st=8jc9d0kd&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80',
           },
           {
             id: 3,
@@ -311,7 +311,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/vah7lf7w5hs8u19nbynmu/3.jpeg?rlkey=byuok4f6w04z4ihnl1aykdduk&st=1flpi7bm&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80',
           },
         ],
       },
@@ -326,7 +326,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/hijpakuh8r9pcz9qk3ak9/4-7-10.jpeg?rlkey=zbnjkmvhf38ne493xag6kxdm4&st=hf4q9ujc&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
           },
           {
             id: 5,
@@ -336,7 +336,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 2,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/29s3s26lwavup8ufep6rf/5-8-11.jpeg?rlkey=h57lm31i2gytewakoudvcppuj&st=6ljshxs8&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
           },
           {
             id: 6,
@@ -346,7 +346,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/5kmbncdrlmlkthfk27u92/6-9-12.jpeg?rlkey=7f8y41gbx98v8ysss3toz22bz&st=vttfibxs&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&q=80',
           },
         ],
       },
@@ -361,7 +361,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/hijpakuh8r9pcz9qk3ak9/4-7-10.jpeg?rlkey=zbnjkmvhf38ne493xag6kxdm4&st=hf4q9ujc&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
           },
           {
             id: 8,
@@ -371,7 +371,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 2,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/29s3s26lwavup8ufep6rf/5-8-11.jpeg?rlkey=h57lm31i2gytewakoudvcppuj&st=6ljshxs8&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
           },
           {
             id: 9,
@@ -381,7 +381,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/5kmbncdrlmlkthfk27u92/6-9-12.jpeg?rlkey=7f8y41gbx98v8ysss3toz22bz&st=vttfibxs&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&q=80',
           },
         ],
       },
@@ -396,7 +396,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/hijpakuh8r9pcz9qk3ak9/4-7-10.jpeg?rlkey=zbnjkmvhf38ne493xag6kxdm4&st=hf4q9ujc&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
           },
           {
             id: 11,
@@ -406,7 +406,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 2,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/29s3s26lwavup8ufep6rf/5-8-11.jpeg?rlkey=h57lm31i2gytewakoudvcppuj&st=6ljshxs8&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
           },
           {
             id: 12,
@@ -416,7 +416,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/5kmbncdrlmlkthfk27u92/6-9-12.jpeg?rlkey=7f8y41gbx98v8ysss3toz22bz&st=vttfibxs&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&q=80',
           },
         ],
       },
@@ -439,7 +439,7 @@ const projectData: { [key: string]: any } = {
       installmentCount: 12,
       annualPayments: 0,
     },
-    images: ['https://www.dropbox.com/scl/fi/gwx0euxy3qbjpdo63g50w/WhatsApp-Image-2026-01-12-at-4.57.27-PM.jpeg?rlkey=yg573w36fr4ubv23slx8k546y&st=bf1v5uvi&raw=1'],
+    images: ['https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80'],
     buildingFeatures: [
       { icon: Car, name: 'Underground Parking' },
       { icon: ElevatorIcon, name: 'High-Speed Elevator' },
@@ -496,7 +496,7 @@ const projectData: { [key: string]: any } = {
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/njccbg4kn7z2447wtqryw/3-6-9.jpeg?rlkey=6popkerx97q0vl670f0cl5yfx&st=bgomh4w3&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80',
           },
           {
             id: 4,
@@ -506,7 +506,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 2,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/w81voh4lqmy6p9puoj7nm/4-7-10.jpeg?rlkey=gav0z385lervychkabjmse5m2&st=9bsl5e5g&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
           },
           {
             id: 5,
@@ -516,7 +516,7 @@ const projectData: { [key: string]: any } = {
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/gi5wuowz72kxzeiw4fgsj/5-8-11.jpeg?rlkey=ju1jnyxwqfevn5kxlm0mpdnl8&st=j8x5knec&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
           },
         ],
       },
@@ -531,7 +531,7 @@ const projectData: { [key: string]: any } = {
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/njccbg4kn7z2447wtqryw/3-6-9.jpeg?rlkey=6popkerx97q0vl670f0cl5yfx&st=bgomh4w3&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80',
           },
           {
             id: 7,
@@ -541,7 +541,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 2,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/w81voh4lqmy6p9puoj7nm/4-7-10.jpeg?rlkey=gav0z385lervychkabjmse5m2&st=9bsl5e5g&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
           },
           {
             id: 8,
@@ -551,7 +551,7 @@ const projectData: { [key: string]: any } = {
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/gi5wuowz72kxzeiw4fgsj/5-8-11.jpeg?rlkey=ju1jnyxwqfevn5kxlm0mpdnl8&st=j8x5knec&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
           },
         ],
       },
@@ -566,7 +566,7 @@ const projectData: { [key: string]: any } = {
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/njccbg4kn7z2447wtqryw/3-6-9.jpeg?rlkey=6popkerx97q0vl670f0cl5yfx&st=bgomh4w3&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80',
           },
           {
             id: 10,
@@ -576,7 +576,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 2,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/w81voh4lqmy6p9puoj7nm/4-7-10.jpeg?rlkey=gav0z385lervychkabjmse5m2&st=9bsl5e5g&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
           },
           {
             id: 11,
@@ -586,7 +586,7 @@ const projectData: { [key: string]: any } = {
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://www.dropbox.com/scl/fi/gi5wuowz72kxzeiw4fgsj/5-8-11.jpeg?rlkey=ju1jnyxwqfevn5kxlm0mpdnl8&st=j8x5knec&raw=1',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
           },
         ],
       },

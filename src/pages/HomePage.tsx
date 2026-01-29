@@ -49,7 +49,7 @@ export function HomePage() {
       beds: 3,
       baths: 2,
       area: '176-230',
-      image: 'https://www.dropbox.com/scl/fi/w3r6wo5qalsardwe7s8rl/WhatsApp-Image-2026-01-12-at-12.50.24-AM.jpeg?rlkey=01g3z8l0wnoyk7mcvsvno2wnr&st=dxohq7pq&raw=1',
+      image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
       featured: true,
     },
     {
@@ -60,7 +60,7 @@ export function HomePage() {
       beds: 2,
       baths: 2,
       area: '146-231',
-      image: 'https://www.dropbox.com/scl/fi/3gvyuzyai9zeg61wtkue6/Logo-Gold.png?rlkey=nsu2yinbsy62ee0md23gr9oby&st=yh7gqjgw&raw=1',
+      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
       isNew: true,
     },
     {
@@ -71,7 +71,7 @@ export function HomePage() {
       beds: 4,
       baths: 3,
       area: '177-242',
-      image: 'https://www.dropbox.com/scl/fi/gwx0euxy3qbjpdo63g50w/WhatsApp-Image-2026-01-12-at-4.57.27-PM.jpeg?rlkey=yg573w36fr4ubv23slx8k546y&st=bf1v5uvi&raw=1',
+      image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80',
     },
   ];
 
