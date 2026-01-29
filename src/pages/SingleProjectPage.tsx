@@ -736,7 +736,7 @@ export function SingleProjectPage() {
         body: JSON.stringify(payload),
       });
 
-      // console.log('Response status:', response.status);
+      console.log('Response status:', response.status);
 
       if (response.ok) {
         const responseData = await response.json().catch(() => null);
