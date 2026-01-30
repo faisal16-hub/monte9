@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import { 
   Shield, 
   Award, 
@@ -19,6 +20,7 @@ import {
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 
 export function WhoAreWePage() {
+  const { t } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides = [
@@ -39,50 +41,50 @@ export function WhoAreWePage() {
   const coreStrengths = [
     {
       icon: Building2,
-      title: 'Engineering Legacy',
-      description: '40+ years of engineering experience built on precision and trust.'
+      titleKey: 'whoAreWe.strengths.engineeringLegacy',
+      descKey: 'whoAreWe.strengths.engineeringLegacyDesc'
     },
     {
       icon: Award,
-      title: 'Construction Quality',
-      description: 'High-quality building materials that ensure long-term value growth.'
+      titleKey: 'whoAreWe.strengths.constructionQuality',
+      descKey: 'whoAreWe.strengths.constructionQualityDesc'
     },
     {
       icon: Compass,
-      title: 'Smart Planning',
-      description: 'Thoughtful layouts that maximize comfort and efficiency.'
+      titleKey: 'whoAreWe.strengths.smartPlanning',
+      descKey: 'whoAreWe.strengths.smartPlanningDesc'
     },
     {
       icon: Leaf,
-      title: 'Sustainability',
-      description: 'Eco-friendly materials and green planning standards.'
+      titleKey: 'whoAreWe.strengths.sustainability',
+      descKey: 'whoAreWe.strengths.sustainabilityDesc'
     }
   ];
 
   const sustainabilityCards = [
     {
       icon: Leaf,
-      title: 'Eco-Friendly Materials',
-      description: 'We use sustainable building materials that reduce environmental impact and enhance living quality.'
+      titleKey: 'whoAreWe.sustainabilityCommitment.ecoFriendly',
+      descKey: 'whoAreWe.sustainabilityCommitment.ecoFriendlyDesc'
     },
     {
       icon: Trees,
-      title: 'Green Open Spaces',
-      description: 'Expansive gardens and parks integrated into every project for healthier living.'
+      titleKey: 'whoAreWe.sustainabilityCommitment.greenSpaces',
+      descKey: 'whoAreWe.sustainabilityCommitment.greenSpacesDesc'
     },
     {
       icon: Wind,
-      title: 'Sustainable Planning',
-      description: 'Energy-efficient designs and smart resource management for a better tomorrow.'
+      titleKey: 'whoAreWe.sustainabilityCommitment.sustainablePlanning',
+      descKey: 'whoAreWe.sustainabilityCommitment.sustainablePlanningDesc'
     }
   ];
 
-  const whyChoose = [
-    '40+ years of engineering experience',
-    'Prime projects in Beit El Watan – Fifth Settlement',
-    'Various apartment sizes and designs',
-    'High construction and quality standards',
-    'Safe real estate investment in New Cairo'
+  const whyChooseKeys = [
+    'whoAreWe.whyChoose.reason1',
+    'whoAreWe.whyChoose.reason2',
+    'whoAreWe.whyChoose.reason3',
+    'whoAreWe.whyChoose.reason4',
+    'whoAreWe.whyChoose.reason5'
   ];
 
   useEffect(() => {
@@ -113,24 +115,24 @@ export function WhoAreWePage() {
               transition={{ duration: 0.8 }}
             >
               <h1 className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-[56px]" style={{ color: '#416D50', lineHeight: '1.2' }}>
-                Who Are We?
+                {t('whoAreWe.hero.title')}
               </h1>
               <p className="mb-6 sm:mb-8 text-base sm:text-lg" style={{ lineHeight: '1.8', color: '#333' }}>
-                Monte Real Estate Development is a leading real estate developer in New Cairo, with over 40 years of engineering experience in delivering high-quality residential projects.
+                {t('whoAreWe.hero.subtitle')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link
                   to="/projects"
                   className="inline-flex items-center justify-center bg-[#416D50] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-[#365840] transition-colors text-base sm:text-[17px]"
                 >
-                  Explore Our Projects
+                  {t('whoAreWe.hero.exploreProjects')}
                   <ArrowRight size={20} className="ml-2" />
                 </Link>
                 <Link
                   to="/contact"
                   className="inline-flex items-center justify-center bg-white border-2 border-[#416D50] text-[#416D50] px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-[#416D50] hover:text-white transition-colors text-base sm:text-[17px]"
                 >
-                  Book a Visit
+                  {t('whoAreWe.hero.bookVisit')}
                 </Link>
               </div>
             </motion.div>
@@ -164,10 +166,10 @@ export function WhoAreWePage() {
             className="text-center mb-6 sm:mb-8"
           >
             <h2 className="mb-4" style={{ color: '#416D50' }}>
-              Distinctive Apartments in Beit El Watan – Fifth Settlement
+              {t('whoAreWe.overview.title')}
             </h2>
             <p className="max-w-3xl mx-auto text-sm sm:text-[15px]" style={{ lineHeight: '1.8', color: '#333' }}>
-              We offer distinctive apartments in Beit El Watan – Fifth Settlement, one of the most promising real estate investment areas in New Cairo.
+              {t('whoAreWe.overview.subtitle')}
             </p>
           </motion.div>
 
@@ -237,7 +239,7 @@ export function WhoAreWePage() {
             className="text-center mb-8 sm:mb-10"
             style={{ color: '#416D50' }}
           >
-            Engineering Excellence with International Standards
+            {t('whoAreWe.strengths.title')}
           </motion.h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
@@ -254,10 +256,10 @@ export function WhoAreWePage() {
                   <strength.icon size={24} className="sm:w-7 sm:h-7" color="#fff" />
                 </div>
                 <h4 className="mb-3 text-lg sm:text-xl" style={{ color: '#416D50' }}>
-                  {strength.title}
+                  {t(strength.titleKey)}
                 </h4>
                 <p className="text-sm" style={{ lineHeight: '1.6', color: '#666' }}>
-                  {strength.description}
+                  {t(strength.descKey)}
                 </p>
               </motion.div>
             ))}
@@ -293,22 +295,22 @@ export function WhoAreWePage() {
               className="order-1 lg:order-2"
             >
               <h2 className="mb-4" style={{ color: '#416D50' }}>
-                Apartments with Various Sizes and Modern Designs
+                {t('whoAreWe.apartments.title')}
               </h2>
               <p className="mb-6 text-sm sm:text-[15px]" style={{ lineHeight: '1.8', color: '#333' }}>
-                We offer apartments of various sizes to suit all needs, designed with modern architecture that combines luxury with functionality.
+                {t('whoAreWe.apartments.subtitle')}
               </p>
               
               {/* Badges */}
               <div className="flex flex-wrap gap-3">
                 <span className="bg-[#416D50] text-white px-4 py-2 rounded-full text-xs sm:text-sm">
-                  Multiple Sizes
+                  {t('whoAreWe.apartments.multipleSizes')}
                 </span>
                 <span className="bg-[#B08C44] text-white px-4 py-2 rounded-full text-xs sm:text-sm">
-                  Modern Layouts
+                  {t('whoAreWe.apartments.modernLayouts')}
                 </span>
                 <span className="bg-[#416D50] text-white px-4 py-2 rounded-full text-xs sm:text-sm">
-                  Functional Spaces
+                  {t('whoAreWe.apartments.functionalSpaces')}
                 </span>
               </div>
             </motion.div>
@@ -328,17 +330,17 @@ export function WhoAreWePage() {
               transition={{ duration: 0.8 }}
             >
               <h2 className="mb-4" style={{ color: '#416D50' }}>
-                Complete Privacy and Comfort
+                {t('whoAreWe.privacy.title')}
               </h2>
               <p className="mb-6 text-sm sm:text-[15px]" style={{ lineHeight: '1.8', color: '#333' }}>
-                Smart planning ensures complete independence for each residential unit, offering tranquility and comfort inside your home.
+                {t('whoAreWe.privacy.subtitle')}
               </p>
               
               {/* Checklist */}
               <div className="space-y-3">
-                {['Independent entrances', 'Smart spacing', 'Noise separation'].map((item, index) => (
+                {['independentEntrances', 'smartSpacing', 'noiseSeparation'].map((itemKey, index) => (
                   <motion.div
-                    key={item}
+                    key={itemKey}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -346,7 +348,7 @@ export function WhoAreWePage() {
                     className="flex items-center gap-3"
                   >
                     <CheckCircle2 size={18} className="sm:w-5 sm:h-5 flex-shrink-0" color="#416D50" />
-                    <span className="text-sm sm:text-[15px]" style={{ color: '#333' }}>{item}</span>
+                    <span className="text-sm sm:text-[15px]" style={{ color: '#333' }}>{t(`whoAreWe.privacy.${itemKey}`)}</span>
                   </motion.div>
                 ))}
               </div>
@@ -396,10 +398,10 @@ export function WhoAreWePage() {
             className="max-w-2xl"
           >
             <h2 className="text-white mb-4">
-              Green Views & Sophisticated Living
+              {t('whoAreWe.greenLiving.title')}
             </h2>
             <p className="text-white/90 text-sm sm:text-[15px]" style={{ lineHeight: '1.8' }}>
-              Expansive green views and open spaces give every unit a sense of peace, luxury, and well-being.
+              {t('whoAreWe.greenLiving.subtitle')}
             </p>
           </motion.div>
         </div>
@@ -422,10 +424,10 @@ export function WhoAreWePage() {
                   <card.icon size={20} className="sm:w-6 sm:h-6" color="#fff" />
                 </div>
                 <h4 className="mb-3 text-lg sm:text-xl" style={{ color: '#416D50' }}>
-                  {card.title}
+                  {t(card.titleKey)}
                 </h4>
                 <p className="text-sm" style={{ lineHeight: '1.6', color: '#666' }}>
-                  {card.description}
+                  {t(card.descKey)}
                 </p>
               </motion.div>
             ))}
@@ -442,13 +444,13 @@ export function WhoAreWePage() {
             viewport={{ once: true }}
             className="text-center mb-8 sm:mb-10 text-[#EFE6BA]"
           >
-            Why Choose Monte for Real Estate Development?
+            {t('whoAreWe.whyChoose.title')}
           </motion.h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
-            {whyChoose.map((reason, index) => (
+            {whyChooseKeys.map((reasonKey, index) => (
               <motion.div
-                key={index}
+                key={reasonKey}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -456,7 +458,7 @@ export function WhoAreWePage() {
                 className="flex items-start gap-3"
               >
                 <CheckCircle2 size={18} className="sm:w-5 sm:h-5 flex-shrink-0 mt-1" color="#B08C44" />
-                <span className="text-sm sm:text-[15px]" style={{ lineHeight: '1.6' }}>{reason}</span>
+                <span className="text-sm sm:text-[15px]" style={{ lineHeight: '1.6' }}>{t(reasonKey)}</span>
               </motion.div>
             ))}
           </div>
@@ -473,10 +475,10 @@ export function WhoAreWePage() {
             transition={{ duration: 0.8 }}
           >
             <h3 className="mb-4 sm:mb-6" style={{ color: '#416D50' }}>
-              We combine the precision of a consultant, the creativity of a developer, and the needs of the customer.
+              {t('whoAreWe.closing.title')}
             </h3>
             <p className="mb-6 sm:mb-8 text-sm sm:text-[15px]" style={{ lineHeight: '1.8', color: '#333' }}>
-              Delivering comprehensive residential projects in strategic locations that guarantee a bright future.
+              {t('whoAreWe.closing.subtitle')}
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -484,13 +486,13 @@ export function WhoAreWePage() {
                 to="/projects"
                 className="inline-flex items-center justify-center bg-[#416D50] text-white px-6 py-3 rounded-lg hover:bg-[#365840] transition-colors text-sm sm:text-base"
               >
-                View Our Projects
+                {t('whoAreWe.closing.viewProjects')}
               </Link>
               <Link
                 to="/contact"
                 className="inline-flex items-center justify-center bg-white border-2 border-[#416D50] text-[#416D50] px-6 py-3 rounded-lg hover:bg-[#416D50] hover:text-white transition-colors text-sm sm:text-base"
               >
-                Contact Us
+                {t('whoAreWe.closing.contactUs')}
               </Link>
             </div>
           </motion.div>

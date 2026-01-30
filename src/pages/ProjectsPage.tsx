@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Bed, Bath, Maximize, SlidersHorizontal, Map, Grid, ChevronDown, ChevronUp, X } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import { Slider } from '../components/ui/slider';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Helmet } from 'react-helmet-async';
@@ -9,7 +10,7 @@ import { Helmet } from 'react-helmet-async';
 const allProjects = [
   {
     id: 1,
-    name: 'J83, bayet al watan, New cairo',
+    nameKey: 'projectNames.project1',
     price: 22000,
     maxPrice: 24500,
     units: 6,
@@ -17,13 +18,14 @@ const allProjects = [
     baths: 2,
     area: '176-230',
     floors: 5,
-    location: 'Bayet al watan, New Cairo',
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
+    locationKey: 'projectNames.bayetAlWatan',
+    locationDetail: 'projectNames.newCairo',
+    image: 'https://images.unsplash.com/photo-1664892798972-079f15663b16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBsdXh1cnklMjBhcGFydG1lbnQlMjBidWlsZGluZ3xlbnwxfHx8fDE3Njk3NzE2MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
     featured: true,
   },
   {
     id: 2,
-    name: 'K108, bayet al watan, New cairo',
+    nameKey: 'projectNames.project2',
     price: 25000,
     maxPrice: 27500,
     units: 12,
@@ -31,14 +33,15 @@ const allProjects = [
     baths: 2,
     area: '146-231',
     floors: 4,
-    location: 'New Cairo',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
+    locationKey: 'projectNames.newCairo',
+    locationDetail: '',
+    image: 'https://images.unsplash.com/photo-1761347604372-ae52634c690a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwcmVzaWRlbnRpYWwlMjB2aWxsYXxlbnwxfHx8fDE3Njk3NzE2MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
     featured: false,
     isNew: true,
   },
   {
     id: 3,
-    name: 'G85, bayet al watan, New cairo',
+    nameKey: 'projectNames.project3',
     price: 20000,
     maxPrice: 22000,
     units: 2,
@@ -46,13 +49,15 @@ const allProjects = [
     baths: 3,
     area: '177-242',
     floors: 6,
-    location: '5th Settlement',
-    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80',
+    locationKey: 'projectNames.fifthSettlement',
+    locationDetail: '',
+    image: 'https://images.unsplash.com/photo-1762397794646-f19044bd0828?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBhcGFydG1lbnQlMjBleHRlcmlvcnxlbnwxfHx8fDE3Njk3NzE2MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
     featured: true,
   },
 ];
 
 export function ProjectsPage() {
+  const { t } = useTranslation();
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('grid');
   const [priceRange, setPriceRange] = useState([5000, 30000]);
   const [selectedFloors, setSelectedFloors] = useState<string>('all');
@@ -91,7 +96,7 @@ export function ProjectsPage() {
       }
     }
     
-    const matchesLocation = selectedLocation === 'all' || project.location === selectedLocation;
+    const matchesLocation = selectedLocation === 'all' || t(project.locationKey) === selectedLocation || t(project.locationDetail) === selectedLocation;
     
     return matchesPrice && matchesFloors && matchesArea && matchesLocation;
   });
@@ -155,9 +160,9 @@ export function ProjectsPage() {
       {/* Header */}
       <section className="bg-[#416D50] text-white py-12 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-white mb-3 sm:mb-4 text-3xl sm:text-4xl">Our Projects</h1>
+          <h1 className="text-white mb-3 sm:mb-4 text-3xl sm:text-4xl">{t('projects.title')}</h1>
           <p className="text-base sm:text-lg lg:text-[19px]">
-            Discover our portfolio of eco-friendly residential developments
+            {t('projects.subtitle')}
           </p>
         </div>
       </section>
@@ -178,7 +183,7 @@ export function ProjectsPage() {
                 {/* Price Range */}
                 <div className="w-full">
                   <label className="block mb-1.5 text-xs sm:text-[11px]" style={{ color: '#666' }}>
-                    Price Range (EGP/m²)
+                    {t('projects.priceRangeFull')}
                   </label>
                   <div className="flex items-center gap-2 sm:gap-3">
                     <span className="text-xs sm:text-[13px] whitespace-nowrap">{priceRange[0].toLocaleString()}</span>
@@ -198,19 +203,19 @@ export function ProjectsPage() {
                   {/* Floors */}
                   <div className="w-full">
                     <label className="block mb-1.5 text-xs sm:text-[11px]" style={{ color: '#666' }}>
-                      Floors
+                      {t('projects.floors')}
                     </label>
                     <Select value={selectedFloors} onValueChange={setSelectedFloors}>
                       <SelectTrigger className="h-9 text-xs sm:text-sm w-full">
-                        <SelectValue placeholder="All floors" />
+                        <SelectValue placeholder={t('projects.allFloors')} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">All floors</SelectItem>
-                        <SelectItem value="3">3 floors</SelectItem>
-                        <SelectItem value="4">4 floors</SelectItem>
-                        <SelectItem value="5">5 floors</SelectItem>
-                        <SelectItem value="6">6 floors</SelectItem>
-                        <SelectItem value="7">7+ floors</SelectItem>
+                        <SelectItem value="all">{t('projects.allFloors')}</SelectItem>
+                        <SelectItem value="3">3 {t('projects.floors').toLowerCase()}</SelectItem>
+                        <SelectItem value="4">4 {t('projects.floors').toLowerCase()}</SelectItem>
+                        <SelectItem value="5">5 {t('projects.floors').toLowerCase()}</SelectItem>
+                        <SelectItem value="6">6 {t('projects.floors').toLowerCase()}</SelectItem>
+                        <SelectItem value="7">7+ {t('projects.floors').toLowerCase()}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -218,17 +223,17 @@ export function ProjectsPage() {
                   {/* Flat Size */}
                   <div className="w-full">
                     <label className="block mb-1.5 text-xs sm:text-[11px]" style={{ color: '#666' }}>
-                      Flat Size
+                      {t('projects.flatSize')}
                     </label>
                     <Select value={selectedArea} onValueChange={setSelectedArea}>
                       <SelectTrigger className="h-9 text-xs sm:text-sm w-full">
-                        <SelectValue placeholder="All sizes" />
+                        <SelectValue placeholder={t('projects.allSizes')} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">All sizes</SelectItem>
-                        <SelectItem value="100-150">100-150 m²</SelectItem>
-                        <SelectItem value="150-200">150-200 m²</SelectItem>
-                        <SelectItem value="200+">200+ m²</SelectItem>
+                        <SelectItem value="all">{t('projects.allSizes')}</SelectItem>
+                        <SelectItem value="100-150">100-150 {t('featured.sqm')}</SelectItem>
+                        <SelectItem value="150-200">150-200 {t('featured.sqm')}</SelectItem>
+                        <SelectItem value="200+">200+ {t('featured.sqm')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -236,19 +241,17 @@ export function ProjectsPage() {
                   {/* Location */}
                   <div className="w-full sm:col-span-2 lg:col-span-1">
                     <label className="block mb-1.5 text-xs sm:text-[11px]" style={{ color: '#666' }}>
-                      Location
+                      {t('projects.location')}
                     </label>
                     <Select value={selectedLocation} onValueChange={setSelectedLocation}>
                       <SelectTrigger className="h-9 text-xs sm:text-sm w-full">
-                        <SelectValue placeholder="All locations" />
+                        <SelectValue placeholder={t('projects.allLocations')} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">All locations</SelectItem>
-                        <SelectItem value="New Cairo">New Cairo</SelectItem>
-                        <SelectItem value="5th Settlement">5th Settlement</SelectItem>
-                        <SelectItem value="Sheikh Zayed">Sheikh Zayed</SelectItem>
-                        <SelectItem value="Maadi">Maadi</SelectItem>
-                        <SelectItem value="North Coast">North Coast</SelectItem>
+                        <SelectItem value="all">{t('projects.allLocations')}</SelectItem>
+                        <SelectItem value={t('projectNames.newCairo')}>{t('projectNames.newCairo')}</SelectItem>
+                        <SelectItem value={t('projectNames.fifthSettlement')}>{t('projectNames.fifthSettlement')}</SelectItem>
+                        <SelectItem value={t('projectNames.bayetAlWatan')}>{t('projectNames.bayetAlWatan')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -266,25 +269,25 @@ export function ProjectsPage() {
               >
                 <SlidersHorizontal size={16} />
                 <span className="text-xs sm:text-[13px]">
-                  {filtersExpanded ? 'Hide Filters' : 'Show Filters'}
+                  {filtersExpanded ? t('projects.hideFilters') : t('projects.showFilters')}
                 </span>
                 {filtersExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
               </button>
               <span className="text-xs sm:text-[13px]" style={{ color: '#666' }}>
-                {filteredProjects.length} properties found
+                {filteredProjects.length} {t('projects.propertiesFound')}
               </span>
             </div>
 
             <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
               <Select value={sortBy} onValueChange={setSortBy}>
                 <SelectTrigger className="w-full sm:w-40 h-9 text-xs sm:text-sm">
-                  <SelectValue placeholder="Sort by" />
+                  <SelectValue placeholder={t('projects.sortBy')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="recent">Most Recent</SelectItem>
-                  <SelectItem value="price-low">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high">Price: High to Low</SelectItem>
-                  <SelectItem value="popular">Most Popular</SelectItem>
+                  <SelectItem value="recent">{t('projects.recent')}</SelectItem>
+                  <SelectItem value="price-low">{t('projects.priceLow')}</SelectItem>
+                  <SelectItem value="price-high">{t('projects.priceHigh')}</SelectItem>
+                  <SelectItem value="popular">{t('featured.title')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -299,7 +302,7 @@ export function ProjectsPage() {
             {/* Active Filters Display */}
             {activeFilters.length > 0 && (
               <div className="mb-6 flex flex-wrap items-center gap-2">
-                <span className="text-xs sm:text-[13px]" style={{ color: '#666' }}>Active filters:</span>
+                <span className="text-xs sm:text-[13px]" style={{ color: '#666' }}>{t('projects.activeFilters')}</span>
                 {activeFilters.map((filter, index) => (
                   <motion.button
                     key={index}
@@ -317,7 +320,7 @@ export function ProjectsPage() {
                   onClick={clearAllFilters}
                   className="text-xs sm:text-[13px] text-[#B08C44] hover:text-[#8a6d35] underline transition-colors"
                 >
-                  Clear all
+                  {t('projects.clearAll')}
                 </button>
               </div>
             )}
@@ -328,10 +331,10 @@ export function ProjectsPage() {
                   <SlidersHorizontal size={48} className="mx-auto mb-4 text-gray-400" />
                 </div>
                 <h3 className="mb-3" style={{ color: '#416D50' }}>
-                  No projects match your filters
+                  {t('projects.noMatch')}
                 </h3>
                 <p className="text-base sm:text-lg mb-6" style={{ color: '#666' }}>
-                  Try adjusting your search criteria to find more properties
+                  {t('projects.adjustCriteria')}
                 </p>
                 {activeFilters.length > 0 && (
                   <button
@@ -339,7 +342,7 @@ export function ProjectsPage() {
                     className="bg-[#416D50] text-white px-6 py-3 rounded-lg hover:bg-[#365840] transition-colors inline-flex items-center gap-2"
                   >
                     <X size={18} />
-                    Clear all filters
+                    {t('projects.clearAllFilters')}
                   </button>
                 )}
               </div>
@@ -356,35 +359,35 @@ export function ProjectsPage() {
                       <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative">
                         {project.featured && (
                           <div className="absolute top-4 right-4 z-10 bg-[#B08C44] text-white px-3 py-1 rounded-full text-xs sm:text-[13px]">
-                            Featured
+                            {t('homeProjects.featured')}
                           </div>
                         )}
                         {project.isNew && (
                           <div className="absolute top-4 right-4 z-10 bg-[#416D50] text-white px-3 py-1 rounded-full text-xs sm:text-[13px]">
-                            New
+                            {t('featured.new')}
                           </div>
                         )}
                         <div className="relative h-52 sm:h-64 overflow-hidden">
                           <img
                             src={project.image}
-                            alt={`${project.name} - ${project.beds} bedroom, ${project.baths} bathroom apartment with ${project.area}m² area in ${project.location}`}
+                            alt={`${t(project.nameKey)} - ${project.beds} bedroom, ${project.baths} bathroom apartment with ${project.area}m² area in ${t(project.locationKey)}`}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                             loading="lazy"
                           />
                         </div>
                         <div className="p-5 sm:p-6">
                           <h4 className="mb-3 text-xl sm:text-[23px]" style={{ color: '#416D50' }}>
-                            {project.name}
+                            {t(project.nameKey)}
                           </h4>
                           <div className="flex items-center justify-between mb-4">
                             <div>
-                              <p className="text-xs sm:text-[13px]" style={{ color: '#666' }}>Price/m²</p>
+                              <p className="text-xs sm:text-[13px]" style={{ color: '#666' }}>{t('homeProjects.pricePerSqm')}</p>
                               <p className="text-base sm:text-[19px]" style={{ color: '#B08C44' }}>
-                                {project.price.toLocaleString()} - {project.maxPrice.toLocaleString()} EGP
+                                {project.price.toLocaleString()} - {project.maxPrice.toLocaleString()} {t('projects.egp')}
                               </p>
                             </div>
                             <div>
-                              <p className="text-xs sm:text-[13px]" style={{ color: '#666' }}>Units left</p>
+                              <p className="text-xs sm:text-[13px]" style={{ color: '#666' }}>{t('homeProjects.unitsLeft')}</p>
                               <p className="text-base sm:text-[19px]" style={{ color: '#416D50' }}>{project.units}</p>
                             </div>
                           </div>
@@ -399,11 +402,11 @@ export function ProjectsPage() {
                             </div>
                             <div className="flex items-center gap-1">
                               <Maximize size={18} className="sm:w-5 sm:h-5" color="#666" />
-                              <span className="text-sm sm:text-base" style={{ color: '#666' }}>{project.area}m²</span>
+                              <span className="text-sm sm:text-base" style={{ color: '#666' }}>{project.area}{t('featured.sqm')}</span>
                             </div>
                           </div>
                           <button className="w-full mt-6 bg-[#416D50] text-white py-2.5 sm:py-3 rounded-lg hover:bg-[#365840] transition-colors text-sm sm:text-base">
-                            See more details
+                            {t('homeProjects.seeMore')}
                           </button>
                         </div>
                       </div>
@@ -422,10 +425,10 @@ export function ProjectsPage() {
               <div className="text-center px-4">
                 <Map size={48} className="sm:w-16 sm:h-16 mx-auto mb-4" color="#666" />
                 <p className="text-base sm:text-lg lg:text-[19px]" style={{ color: '#666' }}>
-                  Map view with project locations
+                  {t('projects.mapViewDesc')}
                 </p>
                 <p className="text-sm sm:text-base mt-2" style={{ color: '#999' }}>
-                  Interactive map integration would go here
+                  {t('projects.comingSoon')}
                 </p>
               </div>
             </div>

@@ -2,13 +2,16 @@ import { Link } from 'react-router-dom';
 import { Shield, Layers, Scale, Leaf, Droplet, Lightbulb, Bed, Bath, Maximize } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 
 export function HomePage() {
+  const { t } = useTranslation();
+  
   const trustFeatures = [
     {
       icon: Shield,
-      title: 'Reliability',
-      description: 'Delivering quality homes on time, every time.',
+      titleKey: 'homeTrust.reliability',
+      descKey: 'homeTrust.reliabilityDesc',
       gradient: 'linear-gradient(127.284deg, rgb(239, 230, 186) 0%, rgb(176, 140, 68) 186%)',
       iconBg: '#fff',
       iconColor: '#416D50',
@@ -16,8 +19,8 @@ export function HomePage() {
     },
     {
       icon: Layers,
-      title: 'Transparency',
-      description: 'Clear communication and honest practices throughout.',
+      titleKey: 'homeTrust.transparency',
+      descKey: 'homeTrust.transparencyDesc',
       gradient: 'linear-gradient(127.284deg, rgb(65, 109, 80) 0%, rgb(176, 140, 68) 186%)',
       iconBg: '#B08C44',
       iconColor: '#fff',
@@ -25,8 +28,8 @@ export function HomePage() {
     },
     {
       icon: Scale,
-      title: 'Fairness',
-      description: 'Competitive pricing with no hidden costs.',
+      titleKey: 'homeTrust.fairness',
+      descKey: 'homeTrust.fairnessDesc',
       gradient: 'linear-gradient(127.284deg, rgb(176, 140, 68) 0%, rgb(239, 230, 186) 186%)',
       iconBg: '#416D50',
       iconColor: '#fff',
@@ -35,43 +38,43 @@ export function HomePage() {
   ];
 
   const ecoFeatures = [
-    { icon: Leaf, title: 'Green Rooftops', description: 'Living roofs that reduce heat and improve air quality' },
-    { icon: Lightbulb, title: 'Energy Efficiency', description: 'Solar panels and LED lighting throughout' },
-    { icon: Droplet, title: 'Water Conservation', description: 'Rainwater harvesting and efficient plumbing systems' },
+    { icon: Leaf, titleKey: 'homeEco.greenRooftops', descKey: 'homeEco.greenRooftopsDesc' },
+    { icon: Lightbulb, titleKey: 'homeEco.energyEfficiency', descKey: 'homeEco.energyEfficiencyDesc' },
+    { icon: Droplet, titleKey: 'homeEco.waterConservation', descKey: 'homeEco.waterConservationDesc' },
   ];
 
   const projects = [
     {
       id: 1,
-      name: 'J83, bayet al watan, New cairo',
+      nameKey: 'projectNames.project1',
       price: '22k - 24.5k',
       units: 6,
       beds: 3,
       baths: 2,
       area: '176-230',
-      image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1664892798972-079f15663b16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBsdXh1cnklMjBhcGFydG1lbnQlMjBidWlsZGluZ3xlbnwxfHx8fDE3Njk3NzE2MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
       featured: true,
     },
     {
       id: 2,
-      name: 'K108, bayet al watan, New cairo',
+      nameKey: 'projectNames.project2',
       price: '25k - 27.5k',
       units: 12,
       beds: 2,
       baths: 2,
       area: '146-231',
-      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1761347604372-ae52634c690a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwcmVzaWRlbnRpYWwlMjB2aWxsYXxlbnwxfHx8fDE3Njk3NzE2MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
       isNew: true,
     },
     {
       id: 3,
-      name: 'G85, bayet al watan, New cairo',
+      nameKey: 'projectNames.project3',
       price: '20k - 22k',
       units: 2,
       beds: 4,
       baths: 3,
       area: '177-242',
-      image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1762397794646-f19044bd0828?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBhcGFydG1lbnQlMjBleHRlcmlvcnxlbnwxfHx8fDE3Njk3NzE2MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
     },
   ];
 
@@ -106,25 +109,16 @@ export function HomePage() {
             className="max-w-2xl w-full"
           >
             <h1 className="text-white mb-4 text-3xl sm:text-4xl md:text-5xl lg:text-[56px]" style={{ lineHeight: '1.2' }}>
-              We build more than homes,<br />We build <motion.span
-                animate={{ 
-                  color: ['#B08C44', '#EFE6BA', '#B08C44', '#416D50', '#B08C44']
-                }}
-                transition={{ 
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              >Legacies</motion.span>
+              {t('hero.title')}
             </h1>
             <p className="text-white/90 mb-6 text-base sm:text-lg" style={{ lineHeight: '1.6' }}>
-              Every home reflects our commitment to quality, craftsmanship and people-centered real estate solutions.
+              {t('hero.subtitle')}
             </p>
             <Link
               to="/projects"
               className="inline-block bg-[#416D50] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-[#365840] transition-colors text-base sm:text-[17px]"
             >
-              Explore properties
+              {t('hero.exploreProjects')}
             </Link>
           </motion.div>
         </div>
@@ -140,13 +134,13 @@ export function HomePage() {
             className="text-center mb-6 sm:mb-8 lg:mb-10 text-3xl sm:text-4xl lg:text-5xl"
             style={{ color: '#416D50' }}
           >
-            Trust is our key to success
+            {t('homeTrust.title')}
           </motion.h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {trustFeatures.map((feature, index) => (
               <motion.div
-                key={feature.title}
+                key={feature.titleKey}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -161,10 +155,10 @@ export function HomePage() {
                   <feature.icon size={24} className="sm:w-7 sm:h-7" style={{ color: feature.iconColor }} />
                 </div>
                 <h5 className="mb-3" style={{ color: feature.textColor }}>
-                  {feature.title}
+                  {t(feature.titleKey)}
                 </h5>
                 <p style={{ fontSize: '14px', color: feature.textColor, opacity: 0.9 }}>
-                  {feature.description}
+                  {t(feature.descKey)}
                 </p>
               </motion.div>
             ))}
@@ -181,17 +175,16 @@ export function HomePage() {
             viewport={{ once: true }}
             className="text-center mb-6 sm:mb-8"
           >
-            <h2 className="text-white mb-4 text-3xl sm:text-4xl lg:text-5xl">Monte is always green</h2>
+            <h2 className="text-white mb-4 text-3xl sm:text-4xl lg:text-5xl">{t('eco.title')}</h2>
             <p style={{ fontSize: '15px', lineHeight: '1.6' }} className="max-w-3xl mx-auto px-4">
-              At Monte Developments, we believe in building a future where green living circles
-              hand-in-hand with modern comfort and aesthetic appeal.
+              {t('footer.about')}
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mt-8 sm:mt-10">
             {ecoFeatures.map((feature, index) => (
               <motion.div
-                key={feature.title}
+                key={feature.titleKey}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -201,8 +194,8 @@ export function HomePage() {
                 <div className="w-12 h-12 sm:w-14 sm:h-14 bg-[#B08C44] rounded-full mx-auto mb-4 flex items-center justify-center">
                   <feature.icon size={22} className="sm:w-6 sm:h-6" />
                 </div>
-                <h5 className="mb-2">{feature.title}</h5>
-                <p style={{ fontSize: '14px', opacity: 0.9 }}>{feature.description}</p>
+                <h5 className="mb-2">{t(feature.titleKey)}</h5>
+                <p style={{ fontSize: '14px', opacity: 0.9 }}>{t(feature.descKey)}</p>
               </motion.div>
             ))}
           </div>
@@ -221,7 +214,7 @@ export function HomePage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="text-sm sm:text-base text-left">Sustainable building materials</span>
+                <span className="text-sm sm:text-base text-left">{t('homeEco.feature1')}</span>
               </motion.div>
 
               <motion.div 
@@ -236,7 +229,7 @@ export function HomePage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="text-sm sm:text-base text-left">Green rooftops and landscaping</span>
+                <span className="text-sm sm:text-base text-left">{t('homeEco.feature2')}</span>
               </motion.div>
 
               <motion.div 
@@ -251,7 +244,7 @@ export function HomePage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="text-sm sm:text-base text-left">Reduced energy and water usage</span>
+                <span className="text-sm sm:text-base text-left">{t('homeEco.feature3')}</span>
               </motion.div>
 
               <motion.div 
@@ -266,7 +259,7 @@ export function HomePage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <span className="text-sm sm:text-base text-left">We build for people and the planet</span>
+                <span className="text-sm sm:text-base text-left">{t('homeEco.feature4')}</span>
               </motion.div>
             </div>
           </div>
@@ -282,7 +275,7 @@ export function HomePage() {
             viewport={{ once: true }}
             className="text-center mb-6 sm:mb-8"
           >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl" style={{ color: '#416D50' }}>Our projects</h2>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl" style={{ color: '#416D50' }}>{t('homeProjects.title')}</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -299,26 +292,31 @@ export function HomePage() {
                     <div className="relative h-44 sm:h-48 overflow-hidden">
                       {project.isNew && (
                         <div className="absolute top-4 right-4 z-10 bg-[#416D50] text-white px-3 py-1 rounded-full text-xs sm:text-[13px]">
-                          New
+                          {t('featured.new')}
+                        </div>
+                      )}
+                      {project.featured && (
+                        <div className="absolute top-4 left-4 z-10 bg-[#B08C44] text-white px-3 py-1 rounded-full text-xs sm:text-[13px]">
+                          {t('homeProjects.featured')}
                         </div>
                       )}
                       <img
                         src={project.image}
-                        alt={`${project.name} - ${project.beds} bedroom, ${project.baths} bathroom apartment in New Cairo`}
+                        alt={`${t(project.nameKey)} - ${project.beds} bedroom, ${project.baths} bathroom apartment in New Cairo`}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
                     </div>
                     <div className="p-4 sm:p-5 flex-1 flex flex-col">
                       <h4 className="mb-3 text-lg sm:text-xl" style={{ color: '#416D50' }}>
-                        {project.name}
+                        {t(project.nameKey)}
                       </h4>
                       <div className="flex items-center justify-between mb-3">
                         <div>
-                          <p style={{ fontSize: '12px', color: '#666' }}>Price/m²</p>
-                          <p className="text-sm sm:text-base" style={{ color: '#B08C44' }}>{project.price} EGP</p>
+                          <p style={{ fontSize: '12px', color: '#666' }}>{t('homeProjects.pricePerSqm')}</p>
+                          <p className="text-sm sm:text-base" style={{ color: '#B08C44' }}>{project.price} {t('projects.egp')}</p>
                         </div>
                         <div>
-                          <p style={{ fontSize: '12px', color: '#666' }}>Units left</p>
+                          <p style={{ fontSize: '12px', color: '#666' }}>{t('homeProjects.unitsLeft')}</p>
                           <p className="text-sm sm:text-base" style={{ color: '#416D50' }}>{project.units}</p>
                         </div>
                       </div>
@@ -337,7 +335,7 @@ export function HomePage() {
                         </div>
                       </div>
                       <button className="w-full mt-auto bg-[#416D50] text-white py-2.5 rounded-lg hover:bg-[#365840] transition-colors text-sm sm:text-base">
-                        See more details
+                        {t('homeProjects.seeMore')}
                       </button>
                     </div>
                   </div>
@@ -351,7 +349,7 @@ export function HomePage() {
               to="/projects"
               className="inline-block bg-[#416D50] text-white px-6 py-3 rounded-lg hover:bg-[#365840] transition-colors text-sm sm:text-base"
             >
-              View All Projects
+              {t('featured.viewAll')}
             </Link>
           </div>
         </div>
@@ -366,23 +364,23 @@ export function HomePage() {
             viewport={{ once: true }}
           >
             <h2 className="mb-4" style={{ color: '#416D50' }}>
-              Have a question?
+              {t('cta.question')}
             </h2>
             <p className="mb-6 text-sm sm:text-[15px]" style={{ color: '#666' }}>
-              Try to browse our FAQs page or contact us directly
+              {t('cta.questionDesc')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/contact"
                 className="inline-block bg-[#416D50] text-white px-6 py-3 rounded-lg hover:bg-[#365840] transition-colors text-sm sm:text-base"
               >
-                Contact Us
+                {t('cta.contact')}
               </Link>
               <Link
                 to="/about"
                 className="inline-block bg-white border-2 border-[#416D50] text-[#416D50] px-6 py-3 rounded-lg hover:bg-[#416D50] hover:text-white transition-colors text-sm sm:text-base"
               >
-                Learn More
+                {t('cta.learnMore')}
               </Link>
             </div>
           </motion.div>

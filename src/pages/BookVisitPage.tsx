@@ -2,8 +2,11 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Calendar, Clock, MapPin, Video, Phone, Mail, CheckCircle, Building2, Users, Loader2 } from 'lucide-react';
 import { toast } from 'sonner@2.0.3';
+import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 
 export function BookVisitPage() {
+  const { t } = useTranslation();
   const API_URL = "https://monte.runasp.net/api";
 
   const [formData, setFormData] = useState({
@@ -25,22 +28,22 @@ export function BookVisitPage() {
 
     // Validate required fields
     if (!formData.name) {
-      toast.error('Name is required');
+      toast.error(t('validation.nameRequired'));
       return;
     }
 
     if (!formData.phone) {
-      toast.error('Phone number is required');
+      toast.error(t('validation.phoneRequired'));
       return;
     }
 
     if (!formData.date) {
-      toast.error('Please select a date');
+      toast.error(t('validation.dateRequired'));
       return;
     }
 
     if (!formData.time) {
-      toast.error('Please select a time');
+      toast.error(t('validation.timeRequired'));
       return;
     }
 
@@ -61,6 +64,9 @@ export function BookVisitPage() {
     console.log('Sending booking request:', payload);
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
       const response = await fetch(`${API_URL}/Email/visit-book`, {
         method: 'POST',
         mode: 'cors',
@@ -69,14 +75,16 @@ export function BookVisitPage() {
           Accept: 'application/json',
         },
         body: JSON.stringify(payload),
+        signal: controller.signal,
       });
 
+      clearTimeout(timeoutId);
       console.log('Response status:', response.status);
 
       if (response.ok) {
         const responseData = await response.json().catch(() => null);
         console.log('Response data:', responseData);
-        toast.success('Meeting request sent! We\'ll contact you soon.');
+        toast.success(t('toast.bookingSuccess'));
         setIsSubmitted(true);
         setFormData({
           name: '',
@@ -91,29 +99,33 @@ export function BookVisitPage() {
       } else {
         const errorData = await response.json().catch(() => ({}));
         console.error('Error response:', errorData);
-        toast.error(errorData.message || `Server error: ${response.status}. Please try again.`);
+        toast.error(t('toast.bookingError'));
       }
     } catch (error) {
       console.error('Error booking meeting:', error);
 
-      if (error instanceof TypeError && error.message === 'Failed to fetch') {
-        toast.error(
-          'Cannot connect to server. Your request details have been logged - please contact us at: +201040503547',
-          { duration: 8000 }
-        );
+      // Log the form data for manual follow-up
+      console.log('=== BOOKING DATA (for manual submission) ===');
+      console.log('Name:', formData.name);
+      console.log('Email:', formData.email || 'Not provided');
+      console.log('Phone:', formData.phone);
+      console.log('Meeting Type:', formData.meetingType);
+      console.log('Date:', formData.date);
+      console.log('Time:', formData.time);
+      console.log('Project Interest:', formData.projectInterest || 'Not specified');
+      console.log('Message:', formData.message || 'None');
+      console.log('Destination: monterealestate.eg@gmail.com');
+      console.log('==========================================');
 
-        console.log('=== BOOKING DATA (for manual submission) ===');
-        console.log('Name:', formData.name);
-        console.log('Email:', formData.email || 'Not provided');
-        console.log('Phone:', formData.phone);
-        console.log('Meeting Type:', formData.meetingType);
-        console.log('Date:', formData.date);
-        console.log('Time:', formData.time);
-        console.log('Project Interest:', formData.projectInterest || 'Not specified');
-        console.log('Message:', formData.message || 'None');
-        console.log('==========================================');
+      if (error instanceof Error && error.name === 'AbortError') {
+        toast.error(t('toast.networkError') + ' (Timeout)', { duration: 8000 });
+      } else if (error instanceof TypeError) {
+        toast.error(t('toast.networkError'), { 
+          duration: 8000,
+          description: 'Your booking has been logged in the console for manual follow-up.'
+        });
       } else {
-        toast.error('Unable to send request. Please call us at: +201040503547');
+        toast.error(t('toast.bookingError'));
       }
     } finally {
       setIsSubmitting(false);
@@ -125,7 +137,13 @@ export function BookVisitPage() {
     '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM'
   ];
 
-  const projects = ['J83', 'Other Projects', 'General Inquiry'];
+  const projects = [
+    t('projectNames.project1'),
+    t('projectNames.project2'),
+    t('projectNames.project3'),
+    t('projectNames.otherProjects'),
+    t('projectNames.generalInquiry')
+  ];
 
   if (isSubmitted) {
     return (
@@ -151,7 +169,7 @@ export function BookVisitPage() {
             transition={{ delay: 0.3 }}
             style={{ color: '#416D50', fontSize: '32px', marginBottom: '16px' }}
           >
-            Booking Confirmed!
+            {t('bookVisit.success.title')}
           </motion.h2>
 
           <motion.p
@@ -160,7 +178,7 @@ export function BookVisitPage() {
             transition={{ delay: 0.4 }}
             style={{ color: '#666', fontSize: '18px', marginBottom: '32px' }}
           >
-            Thank you for booking with Monte Developments. We'll send you a confirmation shortly.
+            {t('bookVisit.success.message')}
           </motion.p>
 
           <motion.div
@@ -173,13 +191,13 @@ export function BookVisitPage() {
               onClick={() => setIsSubmitted(false)}
               className="px-6 py-3 bg-[#416D50] text-white rounded-lg hover:bg-[#365840] transition-colors"
             >
-              Book Another Visit
+              {t('bookVisit.success.bookAnother')}
             </button>
             <a
               href="/"
               className="px-6 py-3 border-2 border-[#416D50] text-[#416D50] rounded-lg hover:bg-[#416D50] hover:text-white transition-colors"
             >
-              Go to Homepage
+              {t('nav.home')}
             </a>
           </motion.div>
         </motion.div>
@@ -199,10 +217,10 @@ export function BookVisitPage() {
             className="text-center"
           >
             <h1 style={{ fontSize: '48px', marginBottom: '16px' }}>
-              Book Your Visit
+              {t('bookVisit.hero.title')}
             </h1>
             <p style={{ fontSize: '20px', opacity: 0.9, maxWidth: '600px', margin: '0 auto' }}>
-              Schedule a meeting with our team to explore your dream property
+              {t('bookVisit.hero.subtitle')}
             </p>
           </motion.div>
 

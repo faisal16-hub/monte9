@@ -3,6 +3,7 @@
 /* Import custom fonts */
 @import url('https://fonts.cdnfonts.com/css/refina');
 @import url('https://fonts.cdnfonts.com/css/avenir-next-lt-pro');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
 
 :root {
   --font-size: 16px;
@@ -133,6 +134,26 @@
     @apply bg-background text-foreground;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Arabic RTL Support */
+  [dir="rtl"] {
+    h1, h2, h3, h4, h5, h6, p, body, label, button, input, textarea, select {
+      font-family: 'Cairo', 'Refina', 'Avenir Next LT Pro', sans-serif;
+    }
+  }
+
+  /* RTL Utilities */
+  [dir="rtl"] .rtl\:flex-row-reverse {
+    flex-direction: row-reverse;
+  }
+  
+  [dir="rtl"] .rtl\:text-right {
+    text-align: right;
+  }
+  
+  [dir="rtl"] .rtl\:text-left {
+    text-align: left;
   }
 }
 

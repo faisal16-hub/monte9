@@ -1,44 +1,52 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Linkedin, MapPin, Mail, Phone } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import imgLogoCream from "figma:asset/62efe959e3cdb193a79d8af37fc305465661d80f.png";
 
 export function Footer() {
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.language === 'ar';
+  
   return (
     <footer className="bg-[#416D50] text-white pt-12 sm:pt-16 pb-6 sm:pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-8 sm:mb-12">
           {/* Logo and Description */}
-          <div className="col-span-1 text-center sm:text-left">
-            <img src={imgLogoCream} alt="Monte Developments" className="h-12 sm:h-14 w-auto mb-4 mx-auto sm:mx-0" />
+          <div className={`col-span-1 text-center ${isRTL ? 'sm:text-right' : 'sm:text-left'}`}>
+            <img 
+              src={imgLogoCream} 
+              alt="Monte Developments" 
+              className={`h-12 sm:h-14 w-auto mb-4 ${isRTL ? 'mx-auto sm:mr-0 sm:ml-auto' : 'mx-auto sm:mx-0'}`} 
+            />
             <p style={{ fontSize: '14px', lineHeight: '1.6' }} className="text-white/80 sm:text-base">
-              Building eco-friendly homes for a sustainable future.
+              {t('footer.about')}
             </p>
           </div>
 
           {/* Quick Links */}
-          <div className="text-center sm:text-left">
-            <h5 className="mb-4">Quick Links</h5>
+          <div className={`text-center ${isRTL ? 'sm:text-right' : 'sm:text-left'}`}>
+            <h5 className="mb-4">{t('footer.quickLinks')}</h5>
             <ul className="space-y-2">
               <Link to="/" className="block text-white/80 hover:text-white transition-colors text-sm sm:text-base">
-                Home
+                {t('nav.home')}
               </Link>
               <Link to="/projects" className="block text-white/80 hover:text-white transition-colors text-sm sm:text-base">
-                Projects
+                {t('nav.projects')}
               </Link>
               <Link to="/about" className="block text-white/80 hover:text-white transition-colors text-sm sm:text-base">
-                About Us
+                {t('nav.about')}
               </Link>
               <Link to="/contact" className="block text-white/80 hover:text-white transition-colors text-sm sm:text-base">
-                Contact
+                {t('nav.contact')}
               </Link>
             </ul>
           </div>
 
           {/* Contact Info */}
-          <div className="text-center sm:text-left">
-            <h5 className="mb-4">Contact</h5>
+          <div className={`text-center ${isRTL ? 'sm:text-right' : 'sm:text-left'}`}>
+            <h5 className="mb-4">{t('footer.contactInfo')}</h5>
             <ul className="space-y-3">
-              <li className="flex items-start gap-2 justify-center sm:justify-start">
+              <li className={`flex items-start gap-2 justify-center ${isRTL ? 'sm:justify-end' : 'sm:justify-start'}`}>
                 <MapPin size={18} className="mt-1 flex-shrink-0" />
                 <a 
                   href="https://maps.app.goo.gl/fYRsjJqb9r2Bavan6?g_st=ipc"
@@ -49,15 +57,15 @@ export function Footer() {
                   50, North Teseen Street, 1, Tagammoa 5 - El Banafseg Buildings
                 </a>
               </li>
-              <li className="flex items-center gap-2 justify-center sm:justify-start">
+              <li className={`flex items-center gap-2 justify-center ${isRTL ? 'sm:justify-end' : 'sm:justify-start'}`}>
                 <Phone size={18} className="flex-shrink-0" />
-                <a href="tel:+201062622625" className="text-sm sm:text-base text-white/80 hover:text-white transition-colors">
+                <a href="tel:+201062622625" className="text-sm sm:text-base text-white/80 hover:text-white transition-colors" dir="ltr">
                   01062622625
                 </a>
               </li>
-              <li className="flex items-center gap-2 justify-center sm:justify-start">
+              <li className={`flex items-center gap-2 justify-center ${isRTL ? 'sm:justify-end' : 'sm:justify-start'}`}>
                 <Mail size={18} className="flex-shrink-0" />
-                <a href="mailto:info@monte.com" className="text-sm sm:text-base text-white/80 hover:text-white transition-colors">
+                <a href="mailto:info@monte.com" className="text-sm sm:text-base text-white/80 hover:text-white transition-colors" dir="ltr">
                   info@monte.com
                 </a>
               </li>
@@ -65,9 +73,9 @@ export function Footer() {
           </div>
 
           {/* Social Media */}
-          <div className="text-center sm:text-left">
-            <h5 className="mb-4">Follow Us</h5>
-            <div className="flex gap-3 sm:gap-4 justify-center sm:justify-start">
+          <div className={`text-center ${isRTL ? 'sm:text-right' : 'sm:text-left'}`}>
+            <h5 className="mb-4">{t('footer.followUs')}</h5>
+            <div className={`flex gap-3 sm:gap-4 justify-center ${isRTL ? 'sm:justify-end' : 'sm:justify-start'}`}>
               <a
                 href="https://www.facebook.com/share/17qKbtRrcc/?mibextid=wwXIfr"
                 target="_blank"

@@ -1,18 +1,21 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import imgLogoGold from "figma:asset/6fba734c25605c8b5353437d84f69125efc20383.png";
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { t } = useTranslation();
 
   const navLinks = [
-    { path: '/', label: 'Home' },
-    { path: '/projects', label: 'Projects' },
-    { path: '/who-are-we', label: 'Who Are We' },
-    { path: '/about', label: 'About us' },
-    { path: '/contact', label: 'Contact us' },
+    { path: '/', label: t('nav.home') },
+    { path: '/projects', label: t('nav.projects') },
+    { path: '/who-are-we', label: t('nav.whoAreWe') },
+    { path: '/about', label: t('nav.about') },
+    { path: '/contact', label: t('nav.contact') },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -32,26 +35,30 @@ export function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                onClick={handleLinkClick}
-                className={`relative transition-colors ${
-                  isActive(link.path)
-                    ? 'text-[#416D50]'
-                    : 'text-gray-700 hover:text-[#416D50]'
-                }`}
-              >
-                <span style={{ fontSize: '19px', fontFamily: "'Avenir Next LT Pro', sans-serif" }}>
-                  {link.label}
-                </span>
-                {isActive(link.path) && (
-                  <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#B08C44]" />
-                )}
-              </Link>
-            ))}
+          <div className="hidden md:flex items-center gap-6">
+            <div className="flex items-center gap-8">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={handleLinkClick}
+                  className={`relative transition-colors ${
+                    isActive(link.path)
+                      ? 'text-[#416D50]'
+                      : 'text-gray-700 hover:text-[#416D50]'
+                  }`}
+                >
+                  <span style={{ fontSize: '19px', fontFamily: "'Avenir Next LT Pro', sans-serif" }}>
+                    {link.label}
+                  </span>
+                  {isActive(link.path) && (
+                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#B08C44]" />
+                  )}
+                </Link>
+              ))}
+            </div>
+            
+            <LanguageSwitcher />
             
             <Link
               to="/book-visit"
@@ -59,7 +66,7 @@ export function Navigation() {
               className="bg-[#416D50] text-white px-6 py-3 rounded-xl hover:bg-[#365840] transition-colors"
               style={{ fontSize: '16px' }}
             >
-              Book a visit
+              {t('nav.bookVisit')}
             </Link>
           </div>
 
@@ -93,12 +100,17 @@ export function Navigation() {
                   {link.label}
                 </Link>
               ))}
+              
+              <div className="px-4">
+                <LanguageSwitcher />
+              </div>
+              
               <Link
                 to="/book-visit"
                 onClick={handleLinkClick}
                 className="bg-[#416D50] text-white px-4 py-3 rounded-xl text-center hover:bg-[#365840] transition-colors"
               >
-                Book a visit
+                {t('nav.bookVisit')}
               </Link>
             </div>
           </div>

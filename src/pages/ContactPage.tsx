@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, Loader2 } from 'lucide-react';
 import { toast } from 'sonner@2.0.3';
+import { useTranslation } from 'react-i18next';
 
 export function ContactPage() {
-   const API_URL = "https://monte.runasp.net/api";
+  const { t } = useTranslation();
+  const API_URL = "https://monte.runasp.net/api";
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -27,15 +29,15 @@ export function ContactPage() {
     const newErrors: { [key: string]: string } = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
+      newErrors.name = t('validation.nameRequired');
     }
 
     if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone number is required';
+      newErrors.phone = t('validation.phoneRequired');
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
+      newErrors.message = t('validation.messageRequired');
     }
 
     setErrors(newErrors);
@@ -63,6 +65,9 @@ export function ContactPage() {
     console.log('Sending contact request:', payload);
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
       const response = await fetch(`${API_URL}/Email/contact-us`, {
         method: 'POST',
         mode: 'cors',
@@ -71,14 +76,16 @@ export function ContactPage() {
           Accept: 'application/json',
         },
         body: JSON.stringify(payload),
+        signal: controller.signal,
       });
 
+      clearTimeout(timeoutId);
       console.log('Response status:', response.status);
 
       if (response.ok) {
         const responseData = await response.json().catch(() => null);
         console.log('Response data:', responseData);
-        toast.success('Message sent successfully! We\'ll get back to you soon.');
+        toast.success(t('toast.contactSuccess'));
         setFormData({
           name: '',
           email: '',
@@ -88,16 +95,29 @@ export function ContactPage() {
       } else {
         const errorData = await response.json().catch(() => ({}));
         console.error('Error response:', errorData);
-        toast.error(errorData.message || `Server error: ${response.status}. Please try again.`);
+        toast.error(t('toast.contactError'));
       }
     } catch (error) {
       console.error('Error sending contact form:', error);
       
-      if (error instanceof TypeError && error.message === 'Failed to fetch') {
-       toast.error('Network error. Please check your connection or contact us directly at: 01062622625');
-
+      // Log the form data for manual follow-up
+      console.log('=== CONTACT FORM DATA (for manual submission) ===');
+      console.log('Name:', formData.name);
+      console.log('Email:', formData.email);
+      console.log('Phone:', formData.phone);
+      console.log('Message:', formData.message);
+      console.log('Destination: monterealestate.eg@gmail.com');
+      console.log('================================================');
+      
+      if (error instanceof Error && error.name === 'AbortError') {
+        toast.error(t('toast.networkError') + ' (Timeout)', { duration: 8000 });
+      } else if (error instanceof TypeError) {
+        toast.error(t('toast.networkError'), { 
+          duration: 8000,
+          description: 'Your message has been logged in the console for manual follow-up.'
+        });
       } else {
-        toast.error('Unable to send message. Please call us at: 01062622625');
+        toast.error(t('toast.contactError'));
       }
     } finally {
       setIsSubmitting(false);
@@ -114,10 +134,10 @@ export function ContactPage() {
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
         >
           <h1 className="text-4xl sm:text-5xl md:text-6xl">
-            Contact <span style={{ color: '#416D50' }}>US</span>
+            {t('contact.title')}
           </h1>
           <p className="text-sm sm:text-[14px] mt-3" style={{ color: '#666' }}>
-            Get in touch with us for your real estate needs
+            {t('contact.subtitle')}
           </p>
         </motion.div>
       </section>
@@ -137,9 +157,9 @@ export function ContactPage() {
               <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8 w-16 h-16 sm:w-24 sm:h-24 bg-[#324132] opacity-25 rounded-full" />
 
               <div className="relative z-10">
-                <h3 className="text-xl sm:text-2xl mb-2">Our Contact Information</h3>
+                <h3 className="text-xl sm:text-2xl mb-2">{t('contact.info')}</h3>
                 <p className="text-sm sm:text-[14px] opacity-90 mb-6 sm:mb-8">
-                  Don't hesitate to contact us anytime
+                  {t('contact.subtitle')}
                 </p>
 
                 <div className="space-y-4 sm:space-y-6">
@@ -218,7 +238,7 @@ export function ContactPage() {
                     className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#416D50] transition-colors text-sm sm:text-base ${
                       errors.name ? 'border-red-500' : 'border-black'
                     }`}
-                    placeholder="Your name"
+                    placeholder={t('contact.form.name')}
                   />
                   {errors.name && (
                     <p className="mt-1 text-red-500 text-xs sm:text-[12px]">
@@ -234,7 +254,7 @@ export function ContactPage() {
                     value={formData.email}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-[#416D50] transition-colors text-sm sm:text-base"
-                    placeholder="Email (Optional)"
+                    placeholder={t('contact.form.email')}
                   />
                 </div>
 
@@ -263,7 +283,7 @@ export function ContactPage() {
                       className={`w-full pl-20 sm:pl-24 pr-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#416D50] transition-colors text-sm sm:text-base text-left ${
                         errors.phone ? 'border-red-500' : 'border-black'
                       }`}
-                      placeholder="Your number"
+                      placeholder={t('contact.form.phone')}
                     />
                   </div>
                   {errors.phone && (
@@ -282,7 +302,7 @@ export function ContactPage() {
                     className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#416D50] transition-colors resize-none text-sm sm:text-base ${
                       errors.message ? 'border-red-500' : 'border-black'
                     }`}
-                    placeholder="Question or problem"
+                    placeholder={t('contact.form.message')}
                   />
                   {errors.message && (
                     <p className="mt-1 text-red-500 text-xs sm:text-[12px]">
@@ -297,7 +317,7 @@ export function ContactPage() {
                   disabled={isSubmitting}
                 >
                   {isSubmitting && <Loader2 className="animate-spin" size={20} />}
-                  {isSubmitting ? 'Sending...' : 'Send'}
+                  {isSubmitting ? t('contact.form.sending') : t('contact.form.send')}
                 </button>
               </form>
             </motion.div>

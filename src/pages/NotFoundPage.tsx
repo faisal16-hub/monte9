@@ -2,8 +2,11 @@ import { Link } from 'react-router-dom';
 import { Home, Search, ArrowLeft } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 
 export function NotFoundPage() {
+  const { t } = useTranslation();
+  
   return (
     <div className="pt-20 min-h-screen bg-[#E9E4D8] flex items-center justify-center">
       <Helmet>
@@ -30,12 +33,12 @@ export function NotFoundPage() {
 
           {/* Title */}
           <h2 className="mb-4 text-2xl sm:text-3xl" style={{ color: '#416D50' }}>
-            Page Not Found
+            {t('notFound.title')}
           </h2>
 
           {/* Description */}
           <p className="text-gray-600 mb-8 text-base sm:text-lg max-w-md mx-auto">
-            Oops! The page you're looking for seems to have wandered off. Don't worry, we'll help you find your way back.
+            {t('notFound.description')}
           </p>
 
           {/* Illustration */}
@@ -62,7 +65,7 @@ export function NotFoundPage() {
               className="inline-flex items-center justify-center gap-2 bg-[#416D50] text-white px-6 py-3 rounded-lg hover:bg-[#365840] transition-colors"
             >
               <Home size={20} />
-              Back to Home
+              {t('notFound.backToHome')}
             </Link>
 
             <button
@@ -70,14 +73,14 @@ export function NotFoundPage() {
               className="inline-flex items-center justify-center gap-2 bg-white border-2 border-[#416D50] text-[#416D50] px-6 py-3 rounded-lg hover:bg-[#416D50] hover:text-white transition-colors"
             >
               <ArrowLeft size={20} />
-              Go Back
+              {t('notFound.goBack')}
             </button>
 
             <Link
               to="/projects"
               className="inline-flex items-center justify-center gap-2 bg-[#B08C44] text-white px-6 py-3 rounded-lg hover:bg-[#8a6d35] transition-colors"
             >
-              View Projects
+              {t('notFound.viewProjects')}
             </Link>
           </motion.div>
 
@@ -88,18 +91,18 @@ export function NotFoundPage() {
             transition={{ delay: 0.8 }}
             className="mt-12 pt-8 border-t border-gray-300"
           >
-            <p className="text-sm text-gray-600 mb-4">Or explore these pages:</p>
+            <p className="text-sm text-gray-600 mb-4">{t('notFound.explorePages')}</p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link to="/about" className="text-[#416D50] hover:text-[#B08C44] transition-colors text-sm">
-                About Us
+                {t('nav.about')}
               </Link>
               <span className="text-gray-400">•</span>
               <Link to="/contact" className="text-[#416D50] hover:text-[#B08C44] transition-colors text-sm">
-                Contact
+                {t('nav.contact')}
               </Link>
               <span className="text-gray-400">•</span>
               <Link to="/book-visit" className="text-[#416D50] hover:text-[#B08C44] transition-colors text-sm">
-                Book a Visit
+                {t('nav.bookVisit')}
               </Link>
             </div>
           </motion.div>

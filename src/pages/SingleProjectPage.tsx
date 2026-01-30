@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Bed, Bath, Maximize, ChevronLeft, ChevronRight, ZoomIn, Car, Shield, Waves, Lock, Camera, Dumbbell, Users, Coffee, Baby, Building2, GraduationCap, Heart, Landmark, MapPin, Cross, Phone, MessageCircle, X, ZoomOut } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
@@ -8,6 +8,7 @@ import { MosqueIcon } from '../components/icons/MosqueIcon';
 import { ElevatorIcon } from '../components/icons/ElevatorIcon';
 import { Lightbox } from '../components/Lightbox';
 import { Breadcrumbs } from '../components/Breadcrumbs';
+import { useTranslation } from 'react-i18next';
 import imgProject1 from "figma:asset/011cd46c34a935d7d75ad6a35e2f8fcd31288c0b.png";
 import imgProject2 from "figma:asset/88a41f477835bd2c01781ffb20f8eae9ffa59c12.png";
 import imgProject3 from "figma:asset/7cf5b95b2ae56ea7ab48f1d9479f1b1314ab5e60.png";
@@ -19,18 +20,18 @@ import imgFloorPlan2 from "figma:asset/0015803f1ca5fbe8a48447d5aadb139da692494e.
 import imgFloorPlan3 from "figma:asset/7c3ad62e7364a726f4b40ee5ea59380eb0df1975.png";
 import imgMeeting from "figma:asset/d791c4c04d6a2793b4ada98152d73053e1f37787.png";
 
-const imgUnitPhoto = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80";
+const imgUnitPhoto = "https://images.unsplash.com/photo-1664892798972-079f15663b16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBsdXh1cnklMjBhcGFydG1lbnQlMjBidWlsZGluZ3xlbnwxfHx8fDE3Njk3NzE2MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080";
 
 const projectData: { [key: string]: any } = {
   '1': {
     id: 1,
-    name: 'J83, bayet al watan, New cairo',
-    location: 'Bayet al watan, New Cairo',
+    nameKey: 'projectNames.project1',
+    locationKey: 'projectNames.bayetAlWatan',
+    cityKey: 'projectNames.newCairo',
     priceRange: '22,000 EGP - 24,500 EGP',
     paymentDuration: 'Up to 4 Years',
     delivery: 'June 2027',
     unitsLeft: 6,
-    city: 'New Cairo',
     totalFloors: 5,
     description: 'A modern eco-friendly residential compound featuring sustainable architecture and green spaces.',
     paymentPlan: {
@@ -39,7 +40,7 @@ const projectData: { [key: string]: any } = {
       installmentCount: 16,
       annualPayments: 0,
     },
-    images: ['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80'],
+    images: ['https://images.unsplash.com/photo-1664892798972-079f15663b16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBsdXh1cnklMjBhcGFydG1lbnQlMjBidWlsZGluZ3xlbnwxfHx8fDE3Njk3NzE2MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080'],
     buildingFeatures: [
       { icon: Car, name: 'Garage' },
       { icon: ElevatorIcon, name: 'Elevator' },
@@ -116,22 +117,22 @@ const projectData: { [key: string]: any } = {
           {
             id: 1,
             name: 'Unit 1',
-            area: 248,
-            garden: 0,
+            area: 286,
+            garden: 140,
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80',
+            floorPlan: null,
           },
           {
             id: 2,
             name: 'Unit 2',
             area: 220,
-            garden: 0,
-            beds: 3,
-            baths: 1,
+            garden: 180,
+            beds: 2,
+            baths: 2,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80',
+            floorPlan: null,
           },
         ],
       },
@@ -141,32 +142,32 @@ const projectData: { [key: string]: any } = {
           {
             id: 3,
             name: 'Unit 3',
-            area: 176,
+            area: 254,
             garden: 0,
-            beds: 3,
+            beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
           },
           {
             id: 4,
             name: 'Unit 4',
-            area: 204,
+            area: 177,
             garden: 0,
-            beds: 4,
-            baths: 3,
+            beds: 3,
+            baths: 2,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800',
           },
           {
             id: 5,
             name: 'Unit 5',
-            area: 230,
+            area: 242,
             garden: 0,
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
           },
         ],
       },
@@ -176,32 +177,32 @@ const projectData: { [key: string]: any } = {
           {
             id: 6,
             name: 'Unit 6',
-            area: 176,
+            area: 254,
             garden: 0,
-            beds: 3,
+            beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
           },
           {
             id: 7,
             name: 'Unit 7',
-            area: 204,
+            area: 177,
             garden: 0,
-            beds: 4,
-            baths: 3,
+            beds: 3,
+            baths: 2,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800',
           },
           {
             id: 8,
             name: 'Unit 8',
-            area: 230,
+            area: 242,
             garden: 0,
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
           },
         ],
       },
@@ -211,32 +212,32 @@ const projectData: { [key: string]: any } = {
           {
             id: 9,
             name: 'Unit 9',
-            area: 176,
+            area: 254,
             garden: 0,
-            beds: 3,
+            beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
           },
           {
             id: 10,
             name: 'Unit 10',
-            area: 204,
+            area: 177,
             garden: 0,
-            beds: 4,
-            baths: 3,
+            beds: 3,
+            baths: 2,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800',
           },
           {
             id: 11,
             name: 'Unit 11',
-            area: 230,
+            area: 242,
             garden: 0,
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
           },
         ],
       },
@@ -244,13 +245,13 @@ const projectData: { [key: string]: any } = {
   },
   '2': {
     id: 2,
-    name: 'K108, bayet al watan, New cairo',
-    location: 'Bayet al watan, New Cairo',
+    nameKey: 'projectNames.project2',
+    locationKey: 'projectNames.bayetAlWatan',
+    cityKey: 'projectNames.newCairo',
     priceRange: '25,000 EGP - 27,500 EGP',
     paymentDuration: 'Up to 5 Years',
     delivery: 'October 2029',
     unitsLeft: 12,
-    city: 'New Cairo',
     totalFloors: 4,
     description: 'A premium eco-friendly residential project with modern amenities and sustainable design.',
     paymentPlan: {
@@ -259,7 +260,7 @@ const projectData: { [key: string]: any } = {
       installmentCount: 20,
       annualPayments: 2,
     },
-    images: ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80'],
+    images: ['https://images.unsplash.com/photo-1761347604372-ae52634c690a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwcmVzaWRlbnRpYWwlMjB2aWxsYXxlbnwxfHx8fDE3Njk3NzE2MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080'],
     buildingFeatures: [
       { icon: Car, name: 'Garage' },
       { icon: ElevatorIcon, name: 'Elevator' },
@@ -291,7 +292,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
           },
           {
             id: 2,
@@ -301,7 +302,7 @@ const projectData: { [key: string]: any } = {
             beds: 2,
             baths: 2,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800',
           },
           {
             id: 3,
@@ -311,7 +312,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
           },
         ],
       },
@@ -326,7 +327,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
           },
           {
             id: 5,
@@ -336,7 +337,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 2,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800',
           },
           {
             id: 6,
@@ -346,7 +347,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
           },
         ],
       },
@@ -361,7 +362,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
           },
           {
             id: 8,
@@ -371,7 +372,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 2,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800',
           },
           {
             id: 9,
@@ -381,7 +382,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
           },
         ],
       },
@@ -396,7 +397,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
           },
           {
             id: 11,
@@ -406,7 +407,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 2,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800',
           },
           {
             id: 12,
@@ -416,7 +417,7 @@ const projectData: { [key: string]: any } = {
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
           },
         ],
       },
@@ -424,13 +425,13 @@ const projectData: { [key: string]: any } = {
   },
   '3': {
     id: 3,
-    name: 'G85, bayet al watan, New cairo',
-    location: '5th Settlement, New Cairo',
+    nameKey: 'projectNames.project3',
+    locationKey: 'projectNames.fifthSettlement',
+    cityKey: 'projectNames.newCairo',
     priceRange: '20,000 EGP - 22,000 EGP',
     paymentDuration: 'Up to 3 Years',
     delivery: 'December 2026',
     unitsLeft: 2,
-    city: 'New Cairo',
     totalFloors: 6,
     description: 'Luxurious eco-friendly residential tower with panoramic views and premium finishes.',
     paymentPlan: {
@@ -439,7 +440,7 @@ const projectData: { [key: string]: any } = {
       installmentCount: 12,
       annualPayments: 0,
     },
-    images: ['https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80'],
+    images: ['https://images.unsplash.com/photo-1762397794646-f19044bd0828?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBhcGFydG1lbnQlMjBleHRlcmlvcnxlbnwxfHx8fDE3Njk3NzE2MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080'],
     buildingFeatures: [
       { icon: Car, name: 'Underground Parking' },
       { icon: ElevatorIcon, name: 'High-Speed Elevator' },
@@ -466,22 +467,22 @@ const projectData: { [key: string]: any } = {
           {
             id: 1,
             name: 'Unit 1',
-            area: 286,
-            garden: 140,
+            area: 248,
+            garden: 0,
             beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: null,
+            floorPlan: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
           },
           {
             id: 2,
             name: 'Unit 2',
             area: 220,
-            garden: 180,
-            beds: 2,
-            baths: 2,
+            garden: 0,
+            beds: 3,
+            baths: 1,
             thumbnail: imgUnitPhoto,
-            floorPlan: null,
+            floorPlan: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800',
           },
         ],
       },
@@ -491,32 +492,32 @@ const projectData: { [key: string]: any } = {
           {
             id: 3,
             name: 'Unit 3',
-            area: 254,
+            area: 176,
             garden: 0,
-            beds: 4,
+            beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
           },
           {
             id: 4,
             name: 'Unit 4',
-            area: 177,
-            garden: 0,
-            beds: 3,
-            baths: 2,
-            thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
-          },
-          {
-            id: 5,
-            name: 'Unit 5',
-            area: 242,
+            area: 204,
             garden: 0,
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
+          },
+          {
+            id: 5,
+            name: 'Unit 5',
+            area: 230,
+            garden: 0,
+            beds: 4,
+            baths: 3,
+            thumbnail: imgUnitPhoto,
+            floorPlan: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800',
           },
         ],
       },
@@ -526,32 +527,32 @@ const projectData: { [key: string]: any } = {
           {
             id: 6,
             name: 'Unit 6',
-            area: 254,
+            area: 176,
             garden: 0,
-            beds: 4,
+            beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
           },
           {
             id: 7,
             name: 'Unit 7',
-            area: 177,
-            garden: 0,
-            beds: 3,
-            baths: 2,
-            thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
-          },
-          {
-            id: 8,
-            name: 'Unit 8',
-            area: 242,
+            area: 204,
             garden: 0,
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
+          },
+          {
+            id: 8,
+            name: 'Unit 8',
+            area: 230,
+            garden: 0,
+            beds: 4,
+            baths: 3,
+            thumbnail: imgUnitPhoto,
+            floorPlan: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800',
           },
         ],
       },
@@ -561,32 +562,32 @@ const projectData: { [key: string]: any } = {
           {
             id: 9,
             name: 'Unit 9',
-            area: 254,
+            area: 176,
             garden: 0,
-            beds: 4,
+            beds: 3,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
           },
           {
             id: 10,
             name: 'Unit 10',
-            area: 177,
-            garden: 0,
-            beds: 3,
-            baths: 2,
-            thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80',
-          },
-          {
-            id: 11,
-            name: 'Unit 11',
-            area: 242,
+            area: 204,
             garden: 0,
             beds: 4,
             baths: 3,
             thumbnail: imgUnitPhoto,
-            floorPlan: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=800&q=80',
+            floorPlan: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800',
+          },
+          {
+            id: 11,
+            name: 'Unit 11',
+            area: 230,
+            garden: 0,
+            beds: 4,
+            baths: 3,
+            thumbnail: imgUnitPhoto,
+            floorPlan: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800',
           },
         ],
       },
@@ -595,9 +596,16 @@ const projectData: { [key: string]: any } = {
 };
 
 export function SingleProjectPage() {
+  const { t } = useTranslation();
   const API_URL = "https://monte.runasp.net/api";
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const project = projectData[id || '1'] || projectData['1'];
+  
+  // Scroll to top when component mounts or id changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
   
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedFloor, setSelectedFloor] = useState('Ground Floor');
@@ -651,12 +659,12 @@ export function SingleProjectPage() {
     
     // Validate required fields
     if (!bookingData.phone) {
-      toast.error('Phone number is required');
+      toast.error(t('singleProject.bookMeeting.phoneRequired'));
       return;
     }
     
     if (!bookingData.date) {
-      toast.error('Please select a meeting date');
+      toast.error(t('singleProject.bookMeeting.dateRequired'));
       return;
     }
     
@@ -673,6 +681,9 @@ export function SingleProjectPage() {
     console.log('Sending booking request:', payload);
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
       const response = await fetch(`${API_URL}/Email/meeting-book`, {
         method: 'POST',
         headers: {
@@ -680,28 +691,44 @@ export function SingleProjectPage() {
           Accept: 'application/json',
         },
         body: JSON.stringify(payload),
+        signal: controller.signal,
       });
 
+      clearTimeout(timeoutId);
       console.log('Response status:', response.status);
 
       if (response.ok) {
         const responseData = await response.json().catch(() => null);
         console.log('Response data:', responseData);
-        toast.success('Meeting request sent! We\'ll contact you soon.');
+        toast.success(t('singleProject.bookMeeting.success'));
         setBookingData({ email: '', phone: '', meetingType: 'online-visit', date: '' });
       } else {
         const errorData = await response.json().catch(() => ({}));
         console.error('Error response:', errorData);
-        toast.error(errorData.message || `Server error: ${response.status}. Please try again.`);
+        toast.error(errorData.message || `${t('singleProject.bookMeeting.serverError')}: ${response.status}`);
       }
     } catch (error) {
       console.error('Error booking meeting:', error);
       
-      // Show detailed error information
-      if (error instanceof TypeError && error.message === 'Failed to fetch') {
-        toast.error(error.message);
+      // Log the form data for manual follow-up
+      console.log('=== MEETING BOOKING DATA (for manual submission) ===');
+      console.log('Project:', project.title);
+      console.log('Email:', bookingData.email);
+      console.log('Phone:', bookingData.phone);
+      console.log('Meeting Type:', bookingData.meetingType);
+      console.log('Date:', bookingData.date);
+      console.log('Destination: monterealestate.eg@gmail.com');
+      console.log('====================================================');
+      
+      if (error instanceof Error && error.name === 'AbortError') {
+        toast.error(t('singleProject.bookMeeting.error') + ' (Timeout)', { duration: 8000 });
+      } else if (error instanceof TypeError) {
+        toast.error(t('singleProject.bookMeeting.error'), { 
+          duration: 8000,
+          description: 'Your booking has been logged in the console for manual follow-up.'
+        });
       } else {
-        toast.error('Unable to send request. Please call us at: +201000000000');
+        toast.error(t('singleProject.bookMeeting.error'));
       }
     } finally {
       setIsSubmitting(false);
@@ -713,7 +740,7 @@ export function SingleProjectPage() {
     
     // Validate phone number
     if (!callData.phone) {
-      toast.error('Phone number is required');
+      toast.error(t('singleProject.callRequest.phoneRequired'));
       return;
     }
     
@@ -727,6 +754,9 @@ export function SingleProjectPage() {
     console.log('Sending call-back request:', payload);
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
       const response = await fetch(`${API_URL}/Email/call-back`, {
         method: 'POST',
         headers: {
@@ -734,28 +764,41 @@ export function SingleProjectPage() {
           Accept: 'application/json',
         },
         body: JSON.stringify(payload),
+        signal: controller.signal,
       });
 
+      clearTimeout(timeoutId);
       console.log('Response status:', response.status);
 
       if (response.ok) {
         const responseData = await response.json().catch(() => null);
         console.log('Response data:', responseData);
-        toast.success('Call request received! We\'ll call you shortly.');
+        toast.success(t('singleProject.callRequest.success'));
         setCallData({ phone: '', countryCode: '+20' });
       } else {
         const errorData = await response.json().catch(() => ({}));
         console.error('Error response:', errorData);
-        toast.error(errorData.message || `Server error: ${response.status}. Please try again.`);
+        toast.error(errorData.message || `${t('singleProject.callRequest.serverError')}: ${response.status}`);
       }
     } catch (error) {
       console.error('Error sending call-back request:', error);
       
-      // Show detailed error information
-      if (error instanceof TypeError && error.message === 'Failed to fetch') {
-        toast.error(error.message);
+      // Log the form data for manual follow-up
+      console.log('=== CALL-BACK REQUEST DATA (for manual submission) ===');
+      console.log('Project:', project.title);
+      console.log('Phone:', callData.countryCode + callData.phone);
+      console.log('Destination: monterealestate.eg@gmail.com');
+      console.log('======================================================');
+      
+      if (error instanceof Error && error.name === 'AbortError') {
+        toast.error(t('singleProject.callRequest.error') + ' (Timeout)', { duration: 8000 });
+      } else if (error instanceof TypeError) {
+        toast.error(t('singleProject.callRequest.error'), { 
+          duration: 8000,
+          description: 'Your request has been logged in the console for manual follow-up.'
+        });
       } else {
-        toast.error('Unable to send request. Please call us at: +201000000000');
+        toast.error(t('singleProject.callRequest.error'));
       }
     } finally {
       setIsSubmitting(false);
@@ -770,18 +813,25 @@ export function SingleProjectPage() {
           opacity: headerOpacity,
           y: headerY,
         }}
-        className="fixed top-16 sm:top-20 left-0 right-0 z-40 bg-white shadow-md pointer-events-none"
+        className="fixed top-16 sm:top-20 left-0 right-0 z-40 bg-white shadow-md"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <MapPin size={18} className="text-[#B08C44]" />
-            <h2 style={{ fontSize: '16px', color: '#416D50', margin: 0 }}>
-              {project.name}
+            <button
+              onClick={() => navigate(-1)}
+              className="flex items-center justify-center w-9 h-9 rounded-full bg-[#E9E4D8] hover:bg-[#416D50] hover:text-white transition-colors flex-shrink-0"
+              aria-label={t('singleProject.backToProjects')}
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <MapPin size={18} className="text-[#B08C44] flex-shrink-0" />
+            <h2 style={{ fontSize: '14px', color: '#416D50', margin: 0 }} className="sm:text-base">
+              {t(project.nameKey)}
             </h2>
           </div>
-          <div className="flex items-center gap-2">
-            <span style={{ fontSize: '12px', color: '#666' }}>Price Range:</span>
-            <span style={{ fontSize: '14px', color: '#B08C44', fontWeight: '600' }}>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <span style={{ fontSize: '11px', color: '#666' }} className="hidden sm:inline">{t('singleProject.priceRange')}:</span>
+            <span style={{ fontSize: '13px', color: '#B08C44', fontWeight: '600' }} className="sm:text-sm">
               {project.priceRange}
             </span>
           </div>
@@ -799,27 +849,45 @@ export function SingleProjectPage() {
       {/* Hero Section */}
       <section className="bg-white py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link to="/projects" className="inline-flex items-center text-[#416D50] hover:underline mb-4">
-            <ChevronLeft size={18} />
-            Back to Projects
-          </Link>
-
-          <h1 style={{ fontSize: '24px', color: '#416D50', marginBottom: '16px' }}>
-            {project.name}
-          </h1>
+          {/* Back Button and Title Row */}
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => navigate(-1)}
+                className="flex items-center justify-center w-10 h-10 rounded-full bg-[#E9E4D8] hover:bg-[#416D50] hover:text-white transition-colors"
+                aria-label={t('singleProject.backToProjects')}
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <MapPin size={16} className="text-[#B08C44]" />
+                  <h1 style={{ fontSize: '18px', color: '#666', margin: 0 }}>
+                    {t(project.nameKey)}
+                  </h1>
+                </div>
+              </div>
+            </div>
+            <div className="text-right">
+              <p style={{ fontSize: '11px', color: '#666' }}>{t('singleProject.priceRange')}:</p>
+              <p style={{ fontSize: '16px', color: '#B08C44', fontWeight: '600', margin: 0 }}>
+                {project.priceRange}
+              </p>
+            </div>
+          </div>
 
           {/* Main Info Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-5">
             <div className="bg-[#E9E4D8] rounded-lg p-4">
-              <p style={{ fontSize: '11px', color: '#666' }}>Project's Meter price range</p>
+              <p style={{ fontSize: '11px', color: '#666' }}>{t('singleProject.meterPriceRange')}</p>
               <p style={{ fontSize: '14px', color: '#416D50', marginTop: '4px' }}>{project.priceRange}</p>
             </div>
             <div className="bg-[#E9E4D8] rounded-lg p-4">
-              <p style={{ fontSize: '11px', color: '#666' }}>Project's Payment duration</p>
+              <p style={{ fontSize: '11px', color: '#666' }}>{t('singleProject.paymentDuration')}</p>
               <p style={{ fontSize: '14px', color: '#416D50', marginTop: '4px' }}>{project.paymentDuration}</p>
             </div>
             <div className="bg-[#E9E4D8] rounded-lg p-4">
-              <p style={{ fontSize: '11px', color: '#666' }}>Delivery</p>
+              <p style={{ fontSize: '11px', color: '#666' }}>{t('singleProject.delivery')}</p>
               <p style={{ fontSize: '14px', color: '#416D50', marginTop: '4px' }}>{project.delivery}</p>
             </div>
           </div>
@@ -837,7 +905,7 @@ export function SingleProjectPage() {
               >
                 <img
                   src={galleryImages[galleryImageIndex]}
-                  alt={`${project.name} - Image ${galleryImageIndex + 1}`}
+                  alt={`${t(project.nameKey)} - Image ${galleryImageIndex + 1}`}
                   className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
@@ -906,15 +974,15 @@ export function SingleProjectPage() {
           {/* Property Details */}
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
             <div>
-              <p style={{ fontSize: '13px', color: '#666' }}>City</p>
-              <p style={{ fontSize: '16px', color: '#416D50' }}>{project.city}</p>
+              <p style={{ fontSize: '13px', color: '#666' }}>{t('singleProject.city')}</p>
+              <p style={{ fontSize: '16px', color: '#416D50' }}>{t(project.cityKey)}</p>
             </div>
             <div>
-              <p style={{ fontSize: '13px', color: '#666' }}>Region/ Section</p>
-              <p style={{ fontSize: '16px', color: '#416D50' }}>New Cairo</p>
+              <p style={{ fontSize: '13px', color: '#666' }}>{t('singleProject.regionSection')}</p>
+              <p style={{ fontSize: '16px', color: '#416D50' }}>{t(project.locationKey)}</p>
             </div>
             <div>
-              <p style={{ fontSize: '13px', color: '#666' }}>Floors</p>
+              <p style={{ fontSize: '13px', color: '#666' }}>{t('singleProject.floors')}</p>
               <p style={{ fontSize: '16px', color: '#416D50' }}>{project.totalFloors}</p>
             </div>
             <a
@@ -926,14 +994,14 @@ export function SingleProjectPage() {
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17.6 6.31999C16.8669 5.58141 15.9943 4.99596 15.033 4.59767C14.0716 4.19938 13.0406 3.99622 12 3.99999C10.6089 4.00135 9.24248 4.36819 8.03771 5.06377C6.83294 5.75935 5.83208 6.75926 5.13534 7.96335C4.4386 9.16745 4.07046 10.5335 4.06776 11.9246C4.06507 13.3158 4.42793 14.6832 5.12 15.89L4 20L8.2 18.9C9.35975 19.5452 10.6629 19.8891 11.99 19.9C14.0997 19.9001 16.124 19.0668 17.6222 17.5816C19.1205 16.0965 19.9715 14.0796 19.99 11.97C19.983 10.9173 19.7682 9.87634 19.3581 8.9068C18.948 7.93725 18.3505 7.05819 17.6 6.31999ZM12 18.53C10.8177 18.5308 9.65701 18.213 8.64 17.61L8.4 17.46L5.91 18.12L6.57 15.69L6.41 15.44C5.55925 14.0667 5.24174 12.429 5.51762 10.8372C5.7935 9.24545 6.64361 7.81015 7.9069 6.80322C9.1702 5.79628 10.7589 5.28765 12.3721 5.37368C13.9853 5.4597 15.511 6.13441 16.66 7.26999C17.916 8.49818 18.635 10.1735 18.66 11.93C18.6442 13.6859 17.9355 15.3645 16.6882 16.6006C15.441 17.8366 13.756 18.5301 12 18.53ZM15.61 13.59C15.41 13.49 14.44 13.01 14.26 12.95C14.08 12.89 13.94 12.85 13.81 13.05C13.6144 13.3181 13.404 13.5751 13.18 13.82C13.07 13.96 12.95 13.97 12.75 13.82C11.6097 13.3694 10.6597 12.5394 10.06 11.47C9.85 11.12 10.26 11.14 10.64 10.39C10.6681 10.3359 10.6827 10.2759 10.6827 10.215C10.6827 10.1541 10.6681 10.0941 10.64 10.04C10.64 9.93999 10.19 8.95999 10.03 8.56999C9.87 8.17999 9.71 8.23999 9.58 8.22999H9.19C9.08895 8.23154 8.9894 8.25465 8.898 8.29776C8.8066 8.34087 8.72546 8.403 8.66 8.47999C8.43562 8.69817 8.26061 8.96191 8.14676 9.25343C8.03291 9.54495 7.98287 9.85749 8 10.17C8.0627 10.9181 8.34443 11.6311 8.81 12.22C9.6622 13.4958 10.8301 14.5293 12.2 15.22C12.9185 15.6394 13.7535 15.8148 14.58 15.72C14.8552 15.6654 15.1159 15.5535 15.345 15.3915C15.5742 15.2296 15.7667 15.0212 15.91 14.78C16.0428 14.4856 16.0846 14.1583 16.03 13.84C15.94 13.74 15.81 13.69 15.61 13.59Z" fill="white"/>
               </svg>
-              <span className="text-sm font-semibold">WhatsApp</span>
+              <span className="text-sm font-semibold">{t('singleProject.whatsapp')}</span>
             </a>
             <a
               href="tel:01040503547"
               className="flex items-center justify-center gap-2 bg-[#416D50] text-white py-3 px-4 rounded-lg hover:bg-[#365840] transition-colors"
             >
               <Phone size={18} />
-              <span className="text-sm font-semibold">Call Us</span>
+              <span className="text-sm font-semibold">{t('singleProject.callUs')}</span>
             </a>
           </div>
         </div>
@@ -942,7 +1010,7 @@ export function SingleProjectPage() {
       {/* Building Features */}
       <section className="py-1 pb-8 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 style={{ color: '#416D50', marginBottom: '16px' }}>Building Features</h3>
+          <h3 style={{ color: '#416D50', marginBottom: '16px' }}>{t('singleProject.buildingFeatures')}</h3>
           <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
             {project.buildingFeatures.map((feature: any, index: number) => (
               <div key={index} className="flex flex-col items-center text-center">
@@ -954,7 +1022,7 @@ export function SingleProjectPage() {
             ))}
           </div>
 
-          <h3 style={{ color: '#416D50', marginTop: '32px', marginBottom: '16px' }}>Area Features</h3>
+          <h3 style={{ color: '#416D50', marginTop: '32px', marginBottom: '16px' }}>{t('singleProject.areaFeatures')}</h3>
           <div className="grid grid-cols-3 md:grid-cols-5 gap-4">
             {project.areaFeatures.map((feature: any, index: number) => (
               <div key={index} className="flex flex-col items-center text-center">
@@ -978,10 +1046,10 @@ export function SingleProjectPage() {
             transition={{ duration: 0.6 }}
           >
             <h3 style={{ color: '#416D50', marginBottom: '24px', fontSize: '28px' }}>
-              Flexible Payment Plan
+              {t('singleProject.payment.title')}
             </h3>
             <p style={{ color: '#666', marginBottom: '48px', fontSize: '16px' }}>
-              We offer convenient payment options to make your dream home affordable
+              {t('singleProject.payment.subtitle')}
             </p>
           </motion.div>
 
@@ -1009,8 +1077,8 @@ export function SingleProjectPage() {
                 >
                   {project.paymentPlan.downPayment}%
                 </motion.h4>
-                <p style={{ color: '#666', fontSize: '16px', fontWeight: '600' }}>Down Payment</p>
-                <p style={{ color: '#999', fontSize: '13px', marginTop: '8px' }}>Initial payment to secure your unit</p>
+                <p style={{ color: '#666', fontSize: '16px', fontWeight: '600' }}>{t('singleProject.payment.downPayment')}</p>
+                <p style={{ color: '#999', fontSize: '13px', marginTop: '8px' }}>{t('singleProject.payment.downPaymentDesc')}</p>
               </div>
             </motion.div>
 
@@ -1037,8 +1105,8 @@ export function SingleProjectPage() {
                 >
                   {project.paymentPlan.installmentYears}
                 </motion.h4>
-                <p style={{ color: '#666', fontSize: '16px', fontWeight: '600' }}>Years</p>
-                <p style={{ color: '#999', fontSize: '13px', marginTop: '8px' }}>Extended payment period</p>
+                <p style={{ color: '#666', fontSize: '16px', fontWeight: '600' }}>{t('singleProject.payment.years')}</p>
+                <p style={{ color: '#999', fontSize: '13px', marginTop: '8px' }}>{t('singleProject.payment.yearsDesc')}</p>
               </div>
             </motion.div>
 
@@ -1065,8 +1133,8 @@ export function SingleProjectPage() {
                 >
                   {project.paymentPlan.installmentCount}
                 </motion.h4>
-                <p style={{ color: '#666', fontSize: '16px', fontWeight: '600' }}>Installments</p>
-                <p style={{ color: '#999', fontSize: '13px', marginTop: '8px' }}>Quarterly payments</p>
+                <p style={{ color: '#666', fontSize: '16px', fontWeight: '600' }}>{t('singleProject.payment.installments')}</p>
+                <p style={{ color: '#999', fontSize: '13px', marginTop: '8px' }}>{t('singleProject.payment.installmentsDesc')}</p>
               </div>
             </motion.div>
 
@@ -1093,8 +1161,8 @@ export function SingleProjectPage() {
                 >
                   {project.paymentPlan.annualPayments}
                 </motion.h4>
-                <p style={{ color: '#666', fontSize: '16px', fontWeight: '600' }}>Annual Payments</p>
-                <p style={{ color: '#999', fontSize: '13px', marginTop: '8px' }}>Yearly large payments</p>
+                <p style={{ color: '#666', fontSize: '16px', fontWeight: '600' }}>{t('singleProject.payment.annualPayments')}</p>
+                <p style={{ color: '#999', fontSize: '13px', marginTop: '8px' }}>{t('singleProject.payment.annualPaymentsDesc')}</p>
               </div>
             </motion.div>
           </div>
@@ -1107,19 +1175,19 @@ export function SingleProjectPage() {
             transition={{ delay: 0.5, duration: 0.6 }}
             className="mt-10 bg-gradient-to-r from-[#416D50] to-[#2d4d38] rounded-xl p-8 text-white"
           >
-            <h4 style={{ fontSize: '22px', marginBottom: '16px', textAlign: 'center' }}>Payment Structure</h4>
+            <h4 style={{ fontSize: '22px', marginBottom: '16px', textAlign: 'center' }}>{t('singleProject.payment.structure')}</h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
               <div>
-                <p style={{ fontSize: '14px', opacity: 0.9, marginBottom: '4px' }}>Initial</p>
-                <p style={{ fontSize: '20px', fontWeight: '600' }}>{project.paymentPlan.downPayment}% Down Payment</p>
+                <p style={{ fontSize: '14px', opacity: 0.9, marginBottom: '4px' }}>{t('singleProject.payment.initial')}</p>
+                <p style={{ fontSize: '20px', fontWeight: '600' }}>{project.paymentPlan.downPayment}% {t('singleProject.payment.downPayment')}</p>
               </div>
               <div>
-                <p style={{ fontSize: '14px', opacity: 0.9, marginBottom: '4px' }}>Quarterly</p>
-                <p style={{ fontSize: '20px', fontWeight: '600' }}>{project.paymentPlan.installmentCount} Installments over {project.paymentPlan.installmentYears} Years</p>
+                <p style={{ fontSize: '14px', opacity: 0.9, marginBottom: '4px' }}>{t('singleProject.payment.quarterly')}</p>
+                <p style={{ fontSize: '20px', fontWeight: '600' }}>{project.paymentPlan.installmentCount} {t('singleProject.payment.installmentsOver')} {project.paymentPlan.installmentYears} {t('singleProject.payment.years')}</p>
               </div>
               <div>
-                <p style={{ fontSize: '14px', opacity: 0.9, marginBottom: '4px' }}>Yearly</p>
-                <p style={{ fontSize: '20px', fontWeight: '600' }}>{project.paymentPlan.annualPayments} Annual Payments</p>
+                <p style={{ fontSize: '14px', opacity: 0.9, marginBottom: '4px' }}>{t('singleProject.payment.yearly')}</p>
+                <p style={{ fontSize: '20px', fontWeight: '600' }}>{project.paymentPlan.annualPayments} {t('singleProject.payment.annualPayments')}</p>
               </div>
             </div>
           </motion.div>
@@ -1129,7 +1197,7 @@ export function SingleProjectPage() {
       {/* Unit Types */}
       <section className="py-8 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h3 style={{ color: '#416D50', marginBottom: '24px', fontSize: '24px' }}>Project Units</h3>
+          <h3 style={{ color: '#416D50', marginBottom: '24px', fontSize: '24px' }}>{t('singleProject.units.title')}</h3>
 
           {project.floors && Array.isArray(project.floors) && project.floors.length > 0 ? (
             <Tabs value={selectedFloor} onValueChange={setSelectedFloor} className="w-full">
@@ -1187,8 +1255,8 @@ export function SingleProjectPage() {
                         <div className="flex items-center gap-2 mb-3">
                           <Maximize size={16} color="#666" />
                           <span style={{ fontSize: '14px', color: '#666' }}>
-                            {unit.area} m²
-                            {unit.garden > 0 && ` + ${unit.garden} m² Garden`}
+                            {unit.area} {t('singleProject.units.sqm')}
+                            {unit.garden > 0 && ` + ${unit.garden} ${t('singleProject.units.sqm')} ${t('singleProject.units.garden')}`}
                           </span>
                         </div>
 
@@ -1196,11 +1264,11 @@ export function SingleProjectPage() {
                         <div className="flex items-center gap-4 mb-4">
                           <div className="flex items-center gap-1.5">
                             <Bed size={18} color="#666" />
-                            <span style={{ fontSize: '14px', color: '#666' }}>{unit.beds} Beds</span>
+                            <span style={{ fontSize: '14px', color: '#666' }}>{unit.beds} {t('singleProject.units.beds')}</span>
                           </div>
                           <div className="flex items-center gap-1.5">
                             <Bath size={18} color="#666" />
-                            <span style={{ fontSize: '14px', color: '#666' }}>{unit.baths} Baths</span>
+                            <span style={{ fontSize: '14px', color: '#666' }}>{unit.baths} {t('singleProject.units.baths')}</span>
                           </div>
                         </div>
 
@@ -1221,7 +1289,7 @@ export function SingleProjectPage() {
                           }`}
                         >
                           <ZoomIn size={16} />
-                          {unit.floorPlan ? 'View Unit Plan' : 'Plan Not Available'}
+                          {unit.floorPlan ? t('singleProject.units.viewPlan') : t('singleProject.units.noPlan')}
                         </button>
                       </div>
                     </motion.div>
@@ -1232,7 +1300,7 @@ export function SingleProjectPage() {
             </Tabs>
           ) : (
             <div className="bg-[#E9E4D8] rounded-lg p-8 text-center">
-              <p style={{ color: '#666', fontSize: '16px' }}>Unit information coming soon</p>
+              <p style={{ color: '#666', fontSize: '16px' }}>{t('singleProject.units.comingSoon')}</p>
             </div>
           )}
         </div>
@@ -1242,7 +1310,7 @@ export function SingleProjectPage() {
       {project.constructionTimeline && project.constructionTimeline.length > 0 && (
         <section className="pt-12 pb-4 bg-[#E9E4D8]">
           <div className="max-w-7xl mx-auto">
-            <h3 style={{ color: '#416D50', marginBottom: '32px', fontSize: '24px', paddingLeft: '1rem', paddingRight: '1rem' }}>Construction Progress</h3>
+            <h3 style={{ color: '#416D50', marginBottom: '32px', fontSize: '24px', paddingLeft: '1rem', paddingRight: '1rem' }}>{t('singleProject.progress.title')}</h3>
             
             {/* Timeline Container */}
             <div 
@@ -1402,20 +1470,20 @@ export function SingleProjectPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start relative">
               {/* Book a Meeting */}
               <div className="bg-white rounded-lg p-6">
-              <h4 style={{ color: '#416D50', marginBottom: '16px', fontSize: '18px' }}>Book a meeting</h4>
+              <h4 style={{ color: '#416D50', marginBottom: '16px', fontSize: '18px' }}>{t('singleProject.bookMeeting.title')}</h4>
               <form onSubmit={handleBooking} className="space-y-3">
                 <input
                   type="email"
                   value={bookingData.email}
                   onChange={(e) => setBookingData({ ...bookingData, email: e.target.value })}
-                  placeholder="Your e-mail *Optional"
+                  placeholder={t('singleProject.bookMeeting.emailPlaceholder')}
                   className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#416D50] text-sm"
                 />
                 <input
                   type="tel"
                   value={bookingData.phone}
                   onChange={(e) => setBookingData({ ...bookingData, phone: e.target.value })}
-                  placeholder="Your number"
+                  placeholder={t('singleProject.bookMeeting.phonePlaceholder')}
                   required
                   className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#416D50] text-sm"
                 />
@@ -1427,7 +1495,7 @@ export function SingleProjectPage() {
                     }`}
                     onClick={() => setBookingData({ ...bookingData, meetingType: 'online-visit' })}
                   >
-                    Office visit
+                    {t('singleProject.bookMeeting.officeVisit')}
                   </button>
                   <button
                     type="button"
@@ -1436,7 +1504,7 @@ export function SingleProjectPage() {
                     }`}
                     onClick={() => setBookingData({ ...bookingData, meetingType: 'online-meeting' })}
                   >
-                    Online meeting
+                    {t('singleProject.bookMeeting.onlineMeeting')}
                   </button>
                 </div>
                 <input
@@ -1452,7 +1520,7 @@ export function SingleProjectPage() {
                   className="w-full bg-[#416D50] text-white py-3 rounded-lg hover:bg-[#365840] transition-colors text-base"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Submitting...' : 'Submit!'}
+                  {isSubmitting ? t('singleProject.bookMeeting.submitting') : t('singleProject.bookMeeting.submit')}
                 </button>
               </form>
             </div>
@@ -1463,7 +1531,7 @@ export function SingleProjectPage() {
                 <div className="flex flex-col items-center h-full py-4">
                   <div className="flex-1 w-[1px] bg-gradient-to-b from-transparent via-[#B08C44] to-[#B08C44]"></div>
                   <div className="bg-[#E9E4D8] px-4 py-2 my-2">
-                    <span style={{ fontSize: '18px', color: '#416D50', fontWeight: '500', letterSpacing: '2px' }}>OR</span>
+                    <span style={{ fontSize: '18px', color: '#416D50', fontWeight: '500', letterSpacing: '2px' }}>{t('singleProject.or')}</span>
                   </div>
                   <div className="flex-1 w-[1px] bg-gradient-to-t from-transparent via-[#B08C44] to-[#B08C44]"></div>
                 </div>
@@ -1472,14 +1540,14 @@ export function SingleProjectPage() {
               <div className="lg:hidden py-2">
                 <div className="flex items-center gap-4 my-8">
                   <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-[#B08C44] to-[#B08C44]"></div>
-                  <span style={{ fontSize: '18px', color: '#416D50', fontWeight: '500', letterSpacing: '2px' }}>OR</span>
+                  <span style={{ fontSize: '18px', color: '#416D50', fontWeight: '500', letterSpacing: '2px' }}>{t('singleProject.or')}</span>
                   <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent via-[#B08C44] to-[#B08C44]"></div>
                 </div>
               </div>
 
               {/* Request a Call */}
               <div className="bg-white rounded-lg p-6">
-                <h4 style={{ color: '#416D50', marginBottom: '16px', fontSize: '18px' }}>Let us to give you a call</h4>
+                <h4 style={{ color: '#416D50', marginBottom: '16px', fontSize: '18px' }}>{t('singleProject.callRequest.title')}</h4>
               <form onSubmit={handleCallRequest} className="space-y-3">
                 <div className="relative w-full">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-2 pr-3 border-r border-gray-300">
@@ -1501,7 +1569,7 @@ export function SingleProjectPage() {
                     type="tel"
                     value={callData.phone}
                     onChange={(e) => setCallData({ ...callData, phone: e.target.value })}
-                    placeholder="Your number"
+                    placeholder={t('singleProject.callRequest.phonePlaceholder')}
                     required
                     className="w-full pl-20 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#416D50] text-sm text-left"
                   />
@@ -1510,7 +1578,7 @@ export function SingleProjectPage() {
                   type="submit"
                   className="w-full bg-[#416D50] text-white py-3 rounded-lg hover:bg-[#365840] transition-colors text-base"
                 >
-                  Submit!
+                  {t('singleProject.callRequest.submit')}
                 </button>
               </form>
             </div>
