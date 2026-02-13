@@ -1,4 +1,4 @@
-{
+export default {
   "nav": {
     "home": "Home",
     "projects": "Projects",
@@ -583,4 +583,4 @@
     "viewProjects": "View Projects",
     "explorePages": "Or explore these pages:"
   }
-}
+} as const;
