@@ -18,6 +18,7 @@ import { ContactPage } from './pages/ContactPage';
 import { WhoAreWePage } from './pages/WhoAreWePage';
 import { BookVisitPage } from './pages/BookVisitPage';
 import { NotFoundPage } from './pages/NotFoundPage';
+import faviconImage from 'figma:asset/745a20e9ae33be19c431d88fd48b7419b4949a13.png';
 
 function App() {
   const { i18n } = useTranslation();
@@ -33,6 +34,9 @@ function App() {
         <Helmet>
           <title>Monte Developments - Eco-Friendly Real Estate</title>
           <meta name="description" content="Monte Developments - Creating sustainable, eco-friendly residential and commercial properties in Egypt's prime locations." />
+          <link rel="icon" type="image/png" href={faviconImage} />
+          <link rel="shortcut icon" type="image/png" href={faviconImage} />
+          <link rel="apple-touch-icon" href={faviconImage} />
           {/* Google Tag Manager */}
           <script>
             {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

@@ -20,7 +20,7 @@ const allProjects = [
     floors: 5,
     locationKey: 'projectNames.bayetAlWatan',
     locationDetail: 'projectNames.newCairo',
-    image: 'https://www.dropbox.com/scl/fi/gwx0euxy3qbjpdo63g50w/WhatsApp-Image-2026-01-12-at-4.57.27-PM.jpeg?rlkey=yg573w36fr4ubv23slx8k546y&st=bf1v5uvi&dl=1',
+    image: 'https://images.unsplash.com/photo-1664892798972-079f15663b16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBsdXh1cnklMjBhcGFydG1lbnQlMjBidWlsZGluZ3xlbnwxfHx8fDE3Njk3NzE2MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
     featured: true,
   },
   {
@@ -35,7 +35,7 @@ const allProjects = [
     floors: 4,
     locationKey: 'projectNames.newCairo',
     locationDetail: '',
-    image: 'https://www.dropbox.com/scl/fi/3gvyuzyai9zeg61wtkue6/Logo-Gold.png?rlkey=nsu2yinbsy62ee0md23gr9oby&st=yh7gqjgw&dl=1',
+    image: 'https://images.unsplash.com/photo-1761347604372-ae52634c690a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwcmVzaWRlbnRpYWwlMjB2aWxsYXxlbnwxfHx8fDE3Njk3NzE2MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
     featured: false,
     isNew: true,
   },
@@ -51,7 +51,7 @@ const allProjects = [
     floors: 6,
     locationKey: 'projectNames.fifthSettlement',
     locationDetail: '',
-    image: 'https://www.dropbox.com/scl/fi/w3r6wo5qalsardwe7s8rl/WhatsApp-Image-2026-01-12-at-12.50.24-AM.jpeg?rlkey=01g3z8l0wnoyk7mcvsvno2wnr&st=dxohq7pq&dl=1',
+    image: 'https://images.unsplash.com/photo-1762397794646-f19044bd0828?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb250ZW1wb3JhcnklMjBhcGFydG1lbnQlMjBleHRlcmlvcnxlbnwxfHx8fDE3Njk3NzE2MTJ8MA&ixlib=rb-4.1.0&q=80&w=1080',
     featured: true,
   },
 ];
